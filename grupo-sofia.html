@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grupo Sofia – Santiago, Cabo Verde</title>
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --sand:   #F5F0E8;
+      --sand2:  #EDE6D8;
+      --warm:   #FAF7F2;
+      --gold:   #B8892A;
+      --gold2:  #D4A84B;
+      --dark:   #2C1F0E;
+      --text:   #3A2D1A;
+      --muted:  #7A6A55;
+      --green:  #1A6B5A;
+      --wa:     #25D366;
+      --r:      14px;
+    }
+
+    /* ── RESET ── */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--warm);color:var(--text);line-height:1.65;}
+    img{display:block;width:100%;object-fit:cover;}
+    a{text-decoration:none;}
+
+    /* ── NAV ── */
+    nav{
+      position:sticky;top:0;z-index:200;
+      background:rgba(245,240,232,.97);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(184,137,42,.2);
+      padding:0 1.25rem;
+      display:flex;align-items:center;justify-content:space-between;
+      height:56px;
+    }
+    .nav-logo{
+      font-size:1.1rem;font-weight:900;color:var(--gold);
+      letter-spacing:1px;cursor:pointer;
+    }
+    .nav-right{display:flex;align-items:center;gap:1.2rem;}
+    .nav-link{color:var(--muted);font-size:.84rem;font-weight:500;cursor:pointer;transition:color .18s;}
+    .nav-link:hover{color:var(--gold);}
+    .nav-wa{
+      display:inline-flex;align-items:center;gap:.4rem;
+      background:var(--wa);color:#fff;
+      padding:.45rem 1rem;border-radius:50px;
+      font-size:.82rem;font-weight:700;
+    }
+    @media(max-width:600px){.nav-link{display:none;}}
+
+    /* ── PAGES ── */
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* ── CONTAINER ── */
+    .wrap{max-width:1060px;margin:0 auto;padding:0 1.25rem;}
+    section.sec{padding:3.5rem 0;}
+
+    /* ── SECTION HEADER ── */
+    .sh{margin-bottom:2rem;}
+    .sh-label{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.3rem;}
+    .sh h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--dark);}
+    .sh p{color:var(--muted);margin-top:.4rem;font-size:.94rem;}
+
+    /* ── DIVIDER ── */
+    hr.div{border:none;border-top:1px solid rgba(184,137,42,.18);max-width:1060px;margin:0 auto;}
+
+    /* ── BUTTONS ── */
+    .btn{
+      display:inline-flex;align-items:center;gap:.45rem;
+      padding:.75rem 1.6rem;border-radius:50px;
+      font-size:.92rem;font-weight:700;cursor:pointer;
+      transition:transform .18s,box-shadow .18s;border:none;
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.18);}
+    .btn-wa{background:var(--wa);color:#fff;}
+    .btn-gold{background:var(--gold);color:#fff;}
+    .btn-outline{background:transparent;color:var(--gold);border:2px solid var(--gold);}
+    .btn-outline:hover{background:var(--gold);color:#fff;}
+    .btn-back{
+      display:inline-flex;align-items:center;gap:.4rem;
+      color:var(--muted);font-size:.88rem;font-weight:600;cursor:pointer;
+      padding:.5rem 0;margin-bottom:1.5rem;
+      background:none;border:none;
+    }
+    .btn-back:hover{color:var(--gold);}
+
+    /* ── HOME HERO BANNER ── */
+    .hero{position:relative;height:320px;overflow:hidden;}
+    .hero img{height:100%;filter:brightness(.68);}
+    .hero-text{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:1rem;color:#fff;
+    }
+    .hero-text h1{font-size:clamp(2rem,7vw,3.6rem);font-weight:900;letter-spacing:2px;text-shadow:0 2px 16px rgba(0,0,0,.5);}
+    .hero-text h1 span{color:#F0D080;}
+    .hero-text p{opacity:.88;margin-top:.4rem;font-size:clamp(.9rem,2.5vw,1.1rem);text-shadow:0 1px 8px rgba(0,0,0,.5);}
+    .hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem;}
+
+    /* ── SERVICE GRID (home) ── */
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;}
+    .svc-card{
+      background:#fff;border:1px solid rgba(184,137,42,.18);border-radius:var(--r);
+      padding:1.5rem 1.3rem;cursor:pointer;
+      transition:box-shadow .2s,transform .2s;
+    }
+    .svc-card:hover{box-shadow:0 6px 24px rgba(184,137,42,.18);transform:translateY(-3px);}
+    .svc-icon{font-size:2rem;margin-bottom:.7rem;}
+    .svc-card h3{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:.3rem;}
+    .svc-card p{color:var(--muted);font-size:.86rem;}
+    .svc-card .arrow{color:var(--gold);font-size:.85rem;margin-top:.8rem;font-weight:700;}
+
+    /* ── ABOUT (home) ── */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
+    @media(max-width:700px){.about-grid{grid-template-columns:1fr;}}
+    .about-img img{height:320px;border-radius:var(--r);}
+    .about-text h2{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:var(--dark);margin-bottom:1rem;}
+    .about-text p{color:var(--muted);margin-bottom:.75rem;font-size:.95rem;}
+    .about-stat{margin-top:1.5rem;display:flex;gap:2rem;flex-wrap:wrap;}
+    .stat{text-align:center;}
+    .stat-n{font-size:1.8rem;font-weight:900;color:var(--gold);}
+    .stat-l{font-size:.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+
+    /* ── SUB-PAGE HERO ── */
+    .sub-hero{position:relative;height:280px;overflow:hidden;}
+    .sub-hero img{height:100%;filter:brightness(.6);}
+    .sub-hero-text{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;color:#fff;padding:1rem;
+    }
+    .sub-hero-text .badge{
+      display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);
+      color:#fff;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+      padding:.3rem .9rem;border-radius:50px;margin-bottom:.8rem;
+    }
+    .sub-hero-text h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.5);}
+    .sub-hero-text p{opacity:.88;font-size:.95rem;margin-top:.4rem;}
+
+    /* ── PHOTO GALLERY ── */
+    .gallery{display:grid;gap:.85rem;}
+    .gallery-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+    .gallery-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+    .gal-img{border-radius:var(--r);overflow:hidden;height:220px;}
+    .gal-img img{height:100%;transition:transform .35s;}
+    .gal-img:hover img{transform:scale(1.04);}
+
+    /* ── INFO CARD ── */
+    .info-box{
+      background:#fff;border:1px solid rgba(184,137,42,.18);
+      border-radius:var(--r);padding:2rem;
+    }
+    .info-box h3{font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:.75rem;}
+    .info-list{list-style:none;}
+    .info-list li{
+      display:flex;gap:.6rem;align-items:flex-start;
+      padding:.45rem 0;border-bottom:1px solid rgba(184,137,42,.1);
+      font-size:.9rem;color:var(--text);
+    }
+    .info-list li:last-child{border-bottom:none;}
+    .info-list li span:first-child{font-size:1.1rem;flex-shrink:0;}
+
+    /* ── CTA BOX ── */
+    .cta-box{
+      background:linear-gradient(135deg,#fff 60%,#FDF6E3);
+      border:1px solid rgba(184,137,42,.25);
+      border-radius:20px;padding:3rem 2rem;
+      text-align:center;max-width:600px;margin:0 auto;
+    }
+    .cta-box h2{font-size:1.6rem;font-weight:800;color:var(--dark);margin-bottom:.6rem;}
+    .cta-box p{color:var(--muted);margin-bottom:1.8rem;}
+    .cta-btns{display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;}
+
+    /* ── PILL ── */
+    .pill{
+      display:inline-block;background:rgba(184,137,42,.12);color:var(--gold);
+      font-size:.7rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;
+      padding:.2rem .7rem;border-radius:50px;margin-bottom:.5rem;
+    }
+
+    /* ── FEATURE ROW ── */
+    .feat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.5rem;}
+    .feat{background:#fff;border:1px solid rgba(184,137,42,.15);border-radius:var(--r);padding:1.25rem 1rem;text-align:center;}
+    .feat-icon{font-size:1.6rem;margin-bottom:.4rem;}
+    .feat h4{font-size:.88rem;font-weight:700;color:var(--dark);}
+    .feat p{font-size:.78rem;color:var(--muted);margin-top:.2rem;}
+
+    /* ── FLOATING WA ── */
+    #float-wa{
+      position:fixed;bottom:1.4rem;right:1.4rem;z-index:999;
+      background:var(--wa);color:#fff;
+      width:58px;height:58px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,.45);
+      transition:transform .2s;cursor:pointer;
+    }
+    #float-wa:hover{transform:scale(1.1);}
+    #float-wa svg{width:30px;height:30px;}
+
+    /* ── FOOTER ── */
+    footer{
+      background:var(--sand2);text-align:center;
+      padding:1.6rem 1.25rem;color:var(--muted);font-size:.82rem;
+      border-top:1px solid rgba(184,137,42,.18);
+    }
+    footer strong{color:var(--gold);}
+
+    /* ── UTILS ── */
+    .bg-sand{background:var(--sand);}
+    .mt1{margin-top:1rem;}
+    .mt2{margin-top:2rem;}
+    .gap-btns{display:flex;gap:.85rem;flex-wrap:wrap;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+    @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo" onclick="goTo('home')">✦ GRUPO SOFIA</div>
+  <div class="nav-right">
+    <span class="nav-link" onclick="goTo('home')">Serviços</span>
+    <span class="nav-link" onclick="scrollAbout()">Sobre Nós</span>
+    <a class="nav-wa btn" href="https://wa.me/SEUNUMERO" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1592554860770-e1e0510a5ee8?w=1400&q=80&auto=format&fit=crop" alt="Praia, Santiago, Cabo Verde"/>
+    <div class="hero-text">
+      <h1>Grupo <span>Sofia</span></h1>
+      <p>Santiago · Cabo Verde · A sua referência em turismo e hospitalidade</p>
+      <div class="hero-btns">
+        <a class="btn btn-wa" href="https://wa.me/SEUNUMERO" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+          Falar connosco
+        </a>
+        <a class="btn btn-outline" style="background:#fff;color:var(--gold);border:2px solid var(--gold);" href="mailto:SEUEMAIL@email.com">✉ Email</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Serviços -->
+  <section class="sec bg-sand" id="servicos">
+    <div class="wrap">
+      <div class="sh">
+        <div class="sh-label">Tudo o que precisar</div>
+        <h2>Os Nossos Serviços</h2>
+        <p>Clique em qualquer serviço para saber mais</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card" onclick="goTo('hotel')">
+          <div class="svc-icon">🏨</div>
+          <h3>Hotel Praia Maria</h3>
+          <p>Hotel boutique no Plateau, coração da Praia. Conforto e atendimento personalizado.</p>
+          <div class="arrow">Ver hotel →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('estrela')">
+          <div class="svc-icon">🌟</div>
+          <h3>Casa Estrela</h3>
+          <p>Casa de hóspedes acolhedora com ambiente familiar e tranquilo.</p>
+          <div class="arrow">Ver casa →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('prainha')">
+          <div class="svc-icon">🌊</div>
+          <h3>Apartamentos Prainha</h3>
+          <p>Apartamentos modernos perto do mar, perfeitos para estadias prolongadas.</p>
+          <div class="arrow">Ver apartamentos →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('cafe')">
+          <div class="svc-icon">☕</div>
+          <h3>Café Sofia</h3>
+          <p>Café descontraído com pequenos-almoços e lanches frescos todos os dias.</p>
+          <div class="arrow">Ver café →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('katxupa')">
+          <div class="svc-icon">🥘</div>
+          <h3>Kaza Katxupa</h3>
+          <p>Gastronomia cabo-verdiana autêntica. A melhor Katxupa da Praia.</p>
+          <div class="arrow">Ver restaurante →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('transfers')">
+          <div class="svc-icon">🚐</div>
+          <h3>Transfers</h3>
+          <p>Aeroporto, hotel ou qualquer destino na ilha. Pontualidade garantida.</p>
+          <div class="arrow">Ver serviço →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('aluguer')">
+          <div class="svc-icon">🚗</div>
+          <h3>Aluguer de Viatura</h3>
+          <p>Viaturas premium com ou sem condutor para explorar Santiago.</p>
+          <div class="arrow">Ver viaturas →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('passeios')">
+          <div class="svc-icon">🗺️</div>
+          <h3>Passeios Turísticos</h3>
+          <p>Descubra Santiago com guias locais — natureza, cultura e história.</p>
+          <div class="arrow">Ver passeios →</div>
+        </div>
+        <div class="svc-card" onclick="goTo('bagagem')">
+          <div class="svc-icon">🔒</div>
+          <h3>Guarda-Bagagem 24h</h3>
+          <p>Espaço seguro e monitorizado para a sua bagagem a qualquer hora.</p>
+          <div class="arrow">Ver serviço →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div"/>
+
+  <!-- Sobre o Grupo -->
+  <section class="sec" id="sobre">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1625586347188-b7165879cb71?w=700&q=80&auto=format&fit=crop" alt="Santiago, Cabo Verde" style="height:320px;border-radius:var(--r);"/>
+        </div>
+        <div class="about-text">
+          <div class="sh-label">Quem somos</div>
+          <h2>O Grupo Sofia</h2>
+          <p>Somos uma empresa cabo-verdiana com raízes profundas em Santiago. O nosso grupo reúne alojamento, restauração, transporte e turismo para oferecer uma experiência completa aos nossos clientes.</p>
+          <p>Do aeroporto ao hotel, do pequeno-almoço ao passeio pela ilha — cuidamos de cada detalhe para que a sua estadia em Santiago seja inesquecível.</p>
+          <p>Contacte-nos pelo WhatsApp ou email e ficamos felizes em ajudar a planear a sua visita.</p>
+          <div class="about-stat">
+            <div class="stat"><div class="stat-n">9+</div><div class="stat-l">Serviços</div></div>
+            <div class="stat"><div class="stat-n">3</div><div class="stat-l">Alojamentos</div></div>
+            <div class="stat"><div class="stat-n">2</div><div class="stat-l">Restaurantes</div></div>
+            <div class="stat"><div class="stat-n">24h</div><div class="stat-l">Disponíveis</div></div>
+          </div>
+          <div class="mt2 gap-btns">
+            <a class="btn btn-wa" href="https://wa.me/SEUNUMERO" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+              Falar connosco
+            </a>
+            <a class="btn btn-outline" href="mailto:SEUEMAIL@email.com">✉ Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ══════════════════════════════════════
+     HOTEL PRAIA MARIA
+══════════════════════════════════════ -->
+<div id="page-hotel" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=80&auto=format&fit=crop" alt="Hotel Praia Maria"/>
+    <div class="sub-hero-text">
+      <div class="badge">Hotel · Plateau · Praia</div>
+      <h1>Hotel Praia Maria</h1>
+      <p>Conforto e elegância no coração da Praia</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Hotel Boutique</div>
+            <h2>Hotel Praia Maria</h2>
+            <p>Localizado na Rua Pedonal nº 30, no Plateau — o centro histórico e comercial da Praia. Quartos confortáveis, atendimento personalizado e serviço completo para tornar a sua estadia inesquecível.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>📍</span><span>Rua Pedonal, nº 30 – Plateau, Praia</span></li>
+            <li><span>📞</span><span>262 20 99</span></li>
+            <li><span>✅</span><span>Wi-Fi grátis em todos os quartos</span></li>
+            <li><span>✅</span><span>Ar condicionado e TV por satélite</span></li>
+            <li><span>✅</span><span>Receção disponível</span></li>
+            <li><span>✅</span><span>Pequeno-almoço incluído (opções disponíveis)</span></li>
+            <li><span>✅</span><span>Localização central – próximo do comércio e serviços</span></li>
+          </ul>
+          <div class="mt2 gap-btns">
+            <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20Praia%20Maria." target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+              Reservar pelo WhatsApp
+            </a>
+            <a class="btn btn-outline" href="mailto:hotelpraiamaria@gmail.com">✉ Email</a>
+          </div>
+        </div>
+        <div>
+          <div class="gallery gallery-3" style="grid-template-columns:1fr 1fr;gap:.7rem;">
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=500&q=80&auto=format&fit=crop" alt="Quarto"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&q=80&auto=format&fit=crop" alt="Quarto"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a1?w=500&q=80&auto=format&fit=crop" alt="Hotel"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1592554860770-e1e0510a5ee8?w=500&q=80&auto=format&fit=crop" alt="Praia"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-hotel -->
+
+
+<!-- ══════════════════════════════════════
+     CASA ESTRELA
+══════════════════════════════════════ -->
+<div id="page-estrela" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=80&auto=format&fit=crop" alt="Casa Estrela"/>
+    <div class="sub-hero-text">
+      <div class="badge">Casa de Hóspedes · Santiago</div>
+      <h1>Casa Estrela</h1>
+      <p>Acolhimento familiar e tranquilidade em Santiago</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Casa de Hóspedes</div>
+            <h2>Casa Estrela</h2>
+            <p>Um espaço com ambiente familiar e acolhedor, ideal para quem procura tranquilidade, autenticidade e uma experiência próxima da cultura cabo-verdiana. Perfeita para viajantes individuais, casais e famílias.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>📍</span><span>Praia, Santiago, Cabo Verde</span></li>
+            <li><span>✅</span><span>Ambiente familiar e acolhedor</span></li>
+            <li><span>✅</span><span>Wi-Fi disponível</span></li>
+            <li><span>✅</span><span>Quartos confortáveis com casa de banho privada</span></li>
+            <li><span>✅</span><span>Pequeno-almoço disponível</span></li>
+            <li><span>✅</span><span>Próxima dos principais serviços e restaurantes</span></li>
+          </ul>
+          <div class="mt2 gap-btns">
+            <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20informações%20sobre%20a%20Casa%20Estrela." target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+              Reservar pelo WhatsApp
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="gallery" style="grid-template-columns:1fr 1fr;gap:.7rem;">
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&q=80&auto=format&fit=crop" alt="Quarto"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?w=500&q=80&auto=format&fit=crop" alt="Sala"/></div>
+            <div class="gal-img" style="height:180px;" style="grid-column:span 2;"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80&auto=format&fit=crop" alt="Casa Estrela"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-estrela -->
+
+
+<!-- ══════════════════════════════════════
+     APARTAMENTOS PRAINHA
+══════════════════════════════════════ -->
+<div id="page-prainha" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1651666990398-5585ad2c9eac?w=1400&q=80&auto=format&fit=crop" alt="Prainha, Santiago"/>
+    <div class="sub-hero-text">
+      <div class="badge">Apartamentos · Prainha · Praia</div>
+      <h1>Apartamentos Prainha</h1>
+      <p>Modernos e confortáveis, perto do mar</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Apartamentos Turísticos</div>
+            <h2>Apartamentos Prainha</h2>
+            <p>Apartamentos modernos situados na zona da Prainha, com fácil acesso à praia e a todos os serviços da cidade da Praia. Ideais para estadias prolongadas, famílias e grupos.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>📍</span><span>Prainha, Praia, Santiago</span></li>
+            <li><span>🌊</span><span>A 5 minutos a pé da Prainha Beach</span></li>
+            <li><span>✅</span><span>Apartamentos totalmente equipados</span></li>
+            <li><span>✅</span><span>Cozinha equipada em todos os apartamentos</span></li>
+            <li><span>✅</span><span>Wi-Fi grátis</span></li>
+            <li><span>✅</span><span>Ar condicionado</span></li>
+            <li><span>✅</span><span>Perfeitos para estadias longas</span></li>
+          </ul>
+          <div class="mt2 gap-btns">
+            <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20informações%20sobre%20os%20Apartamentos%20Prainha." target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+              Reservar pelo WhatsApp
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="gallery" style="grid-template-columns:1fr 1fr;gap:.7rem;">
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80&auto=format&fit=crop" alt="Apartamento"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1618220048045-10a6dbdf9dc1?w=500&q=80&auto=format&fit=crop" alt="Apartamento"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1611582935435-8b294eeb75eb?w=500&q=80&auto=format&fit=crop" alt="Prainha"/></div>
+            <div class="gal-img" style="height:180px;"><img src="https://images.unsplash.com/photo-1651666990398-5585ad2c9eac?w=500&q=80&auto=format&fit=crop" alt="Praia"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-prainha -->
+
+
+<!-- ══════════════════════════════════════
+     CAFÉ SOFIA
+══════════════════════════════════════ -->
+<div id="page-cafe" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1400&q=80&auto=format&fit=crop" alt="Café Sofia"/>
+    <div class="sub-hero-text">
+      <div class="badge">Café · Praia · Santiago</div>
+      <h1>Café Sofia</h1>
+      <p>O seu café favorito na Praia</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Café & Pequenos-almoços</div>
+            <h2>Café Sofia</h2>
+            <p>O ponto de encontro perfeito para começar o dia. Ambiente descontraído, café fresquinho, produtos do dia e serviço rápido. Aberto todos os dias da semana.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>📍</span><span>Praia, Santiago, Cabo Verde</span></li>
+            <li><span>🕐</span><span>Aberto todos os dias</span></li>
+            <li><span>☕</span><span>Café, galão, chá e sumos naturais</span></li>
+            <li><span>🥐</span><span>Pequenos-almoços e lanches frescos</span></li>
+            <li><span>🍰</span><span>Pastéis e bolos caseiros</span></li>
+            <li><span>🌿</span><span>Ambiente tranquilo e acolhedor</span></li>
+          </ul>
+
+          <!-- CTA Reservar Mesa -->
+          <div class="info-box mt2" style="background:linear-gradient(135deg,#FDF6E3,#fff);border-color:var(--gold2);">
+            <h3>🍽️ Quer reservar uma mesa?</h3>
+            <p style="color:var(--muted);font-size:.9rem;margin-bottom:1rem;">Contacte-nos pelo WhatsApp ou email para fazer a sua reserva. É rápido e simples!</p>
+            <div class="gap-btns">
+              <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20reservar%20uma%20mesa%20no%20Café%20Sofia." target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+                Reservar pelo WhatsApp
+              </a>
+              <a class="btn btn-outline" href="mailto:SEUEMAIL@email.com?subject=Reserva%20Café%20Sofia">✉ Email</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="gallery" style="grid-template-columns:1fr 1fr;gap:.7rem;">
+            <div class="gal-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80&auto=format&fit=crop" alt="Café"/></div>
+            <div class="gal-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80&auto=format&fit=crop" alt="Café"/></div>
+            <div class="gal-img" style="height:200px;grid-column:span 2;"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=80&auto=format&fit=crop" alt="Café Sofia interior"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-cafe -->
+
+
+<!-- ══════════════════════════════════════
+     KAZA KATXUPA
+══════════════════════════════════════ -->
+<div id="page-katxupa" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Kaza Katxupa"/>
+    <div class="sub-hero-text">
+      <div class="badge">Restaurante · Rua 5 de Julho · Praia</div>
+      <h1>Kaza Katxupa</h1>
+      <p>A autêntica cozinha cabo-verdiana</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Gastronomia Cabo-Verdiana</div>
+            <h2>Kaza Katxupa</h2>
+            <p>Situado na Rua 5 de Julho, o Kaza Katxupa é o destino certo para quem quer provar a verdadeira gastronomia de Cabo Verde. A Katxupa aqui é considerada uma das melhores da Praia. Ambiente vibrante, música ao vivo e equipa multilingue.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>📍</span><span>Rua 5 de Julho, Praia, Santiago</span></li>
+            <li><span>🕐</span><span>Aberto todos os dias: 8h – 23h</span></li>
+            <li><span>🥘</span><span>Katxupa de peixe, porco e vegetariana</span></li>
+            <li><span>🎵</span><span>Música ao vivo frequente</span></li>
+            <li><span>🌍</span><span>Equipa que fala Português, Inglês e Francês</span></li>
+            <li><span>💰</span><span>Preços muito acessíveis</span></li>
+          </ul>
+
+          <!-- CTA Reservar Mesa -->
+          <div class="info-box mt2" style="background:linear-gradient(135deg,#FDF6E3,#fff);border-color:var(--gold2);">
+            <h3>🍽️ Quer reservar uma mesa?</h3>
+            <p style="color:var(--muted);font-size:.9rem;margin-bottom:1rem;">Faça já a sua reserva pelo WhatsApp ou email. Para grupos, recomendamos reserva antecipada!</p>
+            <div class="gap-btns">
+              <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20reservar%20uma%20mesa%20no%20Kaza%20Katxupa." target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+                Reservar pelo WhatsApp
+              </a>
+              <a class="btn btn-outline" href="mailto:SEUEMAIL@email.com?subject=Reserva%20Kaza%20Katxupa">✉ Email</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="gallery" style="grid-template-columns:1fr 1fr;gap:.7rem;">
+            <div class="gal-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=500&q=80&auto=format&fit=crop" alt="Katxupa"/></div>
+            <div class="gal-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=80&auto=format&fit=crop" alt="Comida"/></div>
+            <div class="gal-img" style="height:200px;grid-column:span 2;"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80&auto=format&fit=crop" alt="Restaurante"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-katxupa -->
+
+
+<!-- ══════════════════════════════════════
+     TRANSFERS
+══════════════════════════════════════ -->
+<div id="page-transfers" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80&auto=format&fit=crop" alt="Transfers"/>
+    <div class="sub-hero-text">
+      <div class="badge">Transporte · Santiago</div>
+      <h1>Serviço de Transfers</h1>
+      <p>Aeroporto, hotel ou qualquer destino — com pontualidade</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="sh">
+        <div class="sh-label">Transporte Privado</div>
+        <h2>Transfers em Santiago</h2>
+        <p>Serviço de transfer privado para aeroporto, hotel, praias, restaurantes ou qualquer destino na ilha de Santiago. Pontualidade, conforto e preços competitivos.</p>
+      </div>
+
+      <div class="gallery gallery-3 mt2">
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80&auto=format&fit=crop" alt="Transfer"/></div>
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80&auto=format&fit=crop" alt="Aeroporto"/></div>
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80&auto=format&fit=crop" alt="Estrada"/></div>
+      </div>
+
+      <div class="feat-row mt2">
+        <div class="feat"><div class="feat-icon">✈️</div><h4>Aeroporto</h4><p>Chegadas e partidas do Aeroporto Internacional da Praia</p></div>
+        <div class="feat"><div class="feat-icon">🏨</div><h4>Hotel</h4><p>Transfer hotel-aeroporto e entre alojamentos</p></div>
+        <div class="feat"><div class="feat-icon">🏖️</div><h4>Praias & Locais</h4><p>Praia Formosa, Tarrafal, Cidade Velha e mais</p></div>
+        <div class="feat"><div class="feat-icon">🕐</div><h4>24 Horas</h4><p>Disponível a qualquer hora do dia ou noite</p></div>
+        <div class="feat"><div class="feat-icon">👨‍👩‍👧‍👦</div><h4>Grupos</h4><p>Viaturas para grupos pequenos e grandes</p></div>
+        <div class="feat"><div class="feat-icon">💬</div><h4>Confirmação Rápida</h4><p>Reserva imediata pelo WhatsApp</p></div>
+      </div>
+
+      <div class="mt2" style="text-align:center;">
+        <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20solicitar%20um%20transfer." target="_blank" style="font-size:1rem;padding:1rem 2rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+          Pedir Transfer pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-transfers -->
+
+
+<!-- ══════════════════════════════════════
+     ALUGUER DE VIATURA
+══════════════════════════════════════ -->
+<div id="page-aluguer" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400&q=80&auto=format&fit=crop" alt="Aluguer de Viatura"/>
+    <div class="sub-hero-text">
+      <div class="badge">Rent-a-Car · Santiago</div>
+      <h1>Aluguer de Viatura</h1>
+      <p>Viaturas premium com ou sem condutor</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="sh">
+        <div class="sh-label">Rent-a-Car Premium</div>
+        <h2>Aluguer de Viatura</h2>
+        <p>Explore a ilha de Santiago ao seu ritmo com as nossas viaturas modernas e bem equipadas. Disponíveis com ou sem condutor.</p>
+      </div>
+
+      <div class="gallery gallery-3 mt2" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80&auto=format&fit=crop" alt="Viatura premium"/></div>
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1493238792000-8be6a0e5546c?w=600&q=80&auto=format&fit=crop" alt="Aluguer"/></div>
+        <div class="gal-img" style="height:230px;"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80&auto=format&fit=crop" alt="Estrada Santiago"/></div>
+      </div>
+
+      <div class="feat-row mt2">
+        <div class="feat"><div class="feat-icon">🚗</div><h4>Com Condutor</h4><p>Viatura e condutor profissional incluídos</p></div>
+        <div class="feat"><div class="feat-icon">🔑</div><h4>Sem Condutor</h4><p>Conduza você mesmo e explore livremente</p></div>
+        <div class="feat"><div class="feat-icon">🌴</div><h4>Toda a ilha</h4><p>Sem restrições de km em Santiago</p></div>
+        <div class="feat"><div class="feat-icon">📅</div><h4>Diário ou Semanal</h4><p>Preços especiais para estadias longas</p></div>
+        <div class="feat"><div class="feat-icon">🛡️</div><h4>Seguro incluído</h4><p>Veículos segurados e bem mantidos</p></div>
+        <div class="feat"><div class="feat-icon">💬</div><h4>Reserva Fácil</h4><p>Marque pelo WhatsApp em minutos</p></div>
+      </div>
+
+      <div class="mt2" style="text-align:center;">
+        <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20alugar%20uma%20viatura." target="_blank" style="font-size:1rem;padding:1rem 2rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+          Reservar Viatura pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-aluguer -->
+
+
+<!-- ══════════════════════════════════════
+     PASSEIOS TURÍSTICOS
+══════════════════════════════════════ -->
+<div id="page-passeios" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1625586347188-b7165879cb71?w=1400&q=80&auto=format&fit=crop" alt="Santiago Cabo Verde"/>
+    <div class="sub-hero-text">
+      <div class="badge">Turismo · Ilha de Santiago</div>
+      <h1>Passeios Turísticos</h1>
+      <p>Descubra toda a ilha de Santiago connosco</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="sh">
+        <div class="sh-label">Tours em Santiago</div>
+        <h2>Passeios Turísticos</h2>
+        <p>Explore o melhor de Santiago com os nossos guias locais — do patrimônio histórico às praias paradisíacas, passando pelas serras e vales verdes do interior.</p>
+      </div>
+
+      <div class="gallery gallery-3 mt2" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+        <div class="gal-img" style="height:240px;"><img src="https://images.unsplash.com/photo-1625586347188-b7165879cb71?w=600&q=80&auto=format&fit=crop" alt="Paisagem"/></div>
+        <div class="gal-img" style="height:240px;"><img src="https://images.unsplash.com/photo-1621944668311-7a97c80f0190?w=600&q=80&auto=format&fit=crop" alt="Praia"/></div>
+        <div class="gal-img" style="height:240px;"><img src="https://images.unsplash.com/photo-1583880613055-cd1f1384b5d6?w=600&q=80&auto=format&fit=crop" alt="Costa"/></div>
+      </div>
+
+      <div class="feat-row mt2">
+        <div class="feat"><div class="feat-icon">🏛️</div><h4>Cidade Velha</h4><p>Património Mundial UNESCO — a primeira cidade colonial europeia nos trópicos</p></div>
+        <div class="feat"><div class="feat-icon">🏔️</div><h4>Serra Malagueta</h4><p>Parque Natural com vistas deslumbrantes e fauna única</p></div>
+        <div class="feat"><div class="feat-icon">🏖️</div><h4>Tarrafal</h4><p>A famosa praia do norte da ilha, com areia branca e água cristalina</p></div>
+        <div class="feat"><div class="feat-icon">🌊</div><h4>Praia Formosa</h4><p>A maior praia de Santiago, a poucos minutos da capital</p></div>
+        <div class="feat"><div class="feat-icon">🎭</div><h4>Cultura Local</h4><p>Mercados, artesanato e a vida autêntica cabo-verdiana</p></div>
+        <div class="feat"><div class="feat-icon">📸</div><h4>Personalizado</h4><p>Roteiros à medida para indivíduos, casais ou grupos</p></div>
+      </div>
+
+      <div class="mt2" style="text-align:center;">
+        <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20passeios%20turísticos%20em%20Santiago." target="_blank" style="font-size:1rem;padding:1rem 2rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+          Reservar Passeio pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-passeios -->
+
+
+<!-- ══════════════════════════════════════
+     GUARDA-BAGAGEM
+══════════════════════════════════════ -->
+<div id="page-bagagem" class="page">
+  <div class="sub-hero">
+    <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=80&auto=format&fit=crop" alt="Guarda-Bagagem"/>
+    <div class="sub-hero-text">
+      <div class="badge">Serviço · 24 Horas · Praia</div>
+      <h1>Guarda-Bagagem</h1>
+      <p>Seguro, disponível 24h, sem preocupações</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <button class="btn-back" onclick="goTo('home')">← Voltar aos serviços</button>
+      <div class="two-col">
+        <div>
+          <div class="sh">
+            <div class="sh-label">Serviço 24 horas</div>
+            <h2>Guarda-Bagagem Seguro</h2>
+            <p>Deixe a sua bagagem em segurança enquanto explora a ilha ou aguarda o seu voo. O nosso espaço é monitorizado e acessível 24 horas por dia, 7 dias por semana.</p>
+          </div>
+          <ul class="info-list">
+            <li><span>🕐</span><span>Disponível 24 horas por dia, 7 dias por semana</span></li>
+            <li><span>🔒</span><span>Espaço seguro e monitorizado</span></li>
+            <li><span>🧳</span><span>Ideal entre o check-out e o voo</span></li>
+            <li><span>📍</span><span>Localização central na Praia</span></li>
+            <li><span>💰</span><span>Preços acessíveis por hora ou dia</span></li>
+            <li><span>✅</span><span>Aceita malas de todos os tamanhos</span></li>
+          </ul>
+          <div class="mt2 gap-btns">
+            <a class="btn btn-wa" href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20informações%20sobre%20o%20serviço%20de%20guarda-bagagem." target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/></svg>
+              Contactar pelo WhatsApp
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="gallery" style="grid-template-columns:1fr;gap:.85rem;">
+            <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=700&q=80&auto=format&fit=crop" alt="Bagagem"/></div>
+            <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=700&q=80&auto=format&fit=crop" alt="Armazenamento"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-bagagem -->
+
+
+<!-- ══════════════════════════════════════
+     FOOTER (global)
+══════════════════════════════════════ -->
+<footer>
+  <p><strong>Grupo Sofia</strong> · Hotel Praia Maria · Casa Estrela · Apartamentos Prainha · Café Sofia · Kaza Katxupa</p>
+  <p style="margin-top:.3rem;font-size:.78rem;">Praia, Santiago, Cabo Verde · Todos os direitos reservados © 2026</p>
+</footer>
+
+<!-- ══════════════════════════════════════
+     BOTÃO WA FLUTUANTE
+══════════════════════════════════════ -->
+<a id="float-wa" href="https://wa.me/SEUNUMERO" target="_blank" title="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.523 5.856L.057 23.998l6.304-1.654A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.372l-.359-.214-3.74.981.998-3.648-.234-.374A9.817 9.817 0 012.182 12C2.182 6.568 6.568 2.182 12 2.182S21.818 6.568 21.818 12 17.432 21.818 12 21.818z"/>
+  </svg>
+</a>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT – NAVEGAÇÃO
+══════════════════════════════════════ -->
+<script>
+  const pages = {
+    'home':      'page-home',
+    'hotel':     'page-hotel',
+    'estrela':   'page-estrela',
+    'prainha':   'page-prainha',
+    'cafe':      'page-cafe',
+    'katxupa':   'page-katxupa',
+    'transfers': 'page-transfers',
+    'aluguer':   'page-aluguer',
+    'passeios':  'page-passeios',
+    'bagagem':   'page-bagagem',
+  };
+
+  function goTo(key) {
+    Object.values(pages).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
+    const target = document.getElementById(pages[key]);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }
+
+  function scrollAbout() {
+    goTo('home');
+    setTimeout(() => {
+      const el = document.getElementById('sobre');
+      if (el) el.scrollIntoView({behavior:'smooth'});
+    }, 100);
+  }
+
+  // Start on home
+  goTo('home');
+</script>
+
+</body>
+</html>
