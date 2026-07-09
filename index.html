@@ -27,6 +27,11 @@
     .nav-link{color:var(--muted);font-size:.84rem;font-weight:500;cursor:pointer;transition:color .18s;white-space:nowrap;}
     .nav-link:hover{color:var(--gold);}
     @media(max-width:640px){.nav-link{display:none;}}
+    /* ── LANGUAGE SWITCH ── */
+    .lang-switch{display:flex;gap:.15rem;background:rgba(184,137,42,.1);border:1px solid rgba(184,137,42,.25);border-radius:50px;padding:.15rem;}
+    .lang-btn{border:none;background:none;cursor:pointer;font-size:.74rem;font-weight:700;color:var(--muted);padding:.28rem .55rem;border-radius:50px;transition:background .18s,color .18s;}
+    .lang-btn:hover{color:var(--gold);}
+    .lang-btn.active{background:var(--gold);color:#fff;}
 
     /* ── PAGE SYSTEM ── */
     .page{display:none;}
@@ -56,10 +61,13 @@
     .btn-back:hover{color:var(--gold);}
 
     /* ── HERO ── */
-    .hero{position:relative;height:380px;overflow:hidden;}
-    @media(max-width:480px){.hero{height:280px;}}
-    .hero img{height:100%;filter:brightness(.62);}
-    .hero-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem;color:#fff;}
+    .hero{position:relative;overflow:hidden;background:var(--dark);height:600px;}
+    @media(max-width:480px){.hero{height:340px;}}
+    .hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.62);}
+    .hero-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:1rem 1rem 2rem;color:#fff;}
+    .photo-credit{position:absolute;right:.85rem;bottom:.6rem;z-index:5;font-size:.7rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(0,0,0,.35);padding:.25rem .6rem;border-radius:50px;backdrop-filter:blur(4px);transition:color .18s,background .18s;}
+    .photo-credit:hover{color:#fff;background:rgba(0,0,0,.55);}
+    @media(max-width:480px){.photo-credit{font-size:.62rem;right:.5rem;bottom:.4rem;}}
     .hero-text h1{font-size:clamp(2rem,8vw,3.8rem);font-weight:900;letter-spacing:2px;text-shadow:0 2px 16px rgba(0,0,0,.5);}
     .hero-text h1 span{color:#F0D080;}
     .hero-text p{opacity:.9;margin-top:.4rem;font-size:clamp(.85rem,2.5vw,1.05rem);text-shadow:0 1px 8px rgba(0,0,0,.5);max-width:min(92vw,760px);white-space:nowrap;}
@@ -87,7 +95,7 @@
     .acc-arrow{display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:#fff;font-size:.78rem;font-weight:800;border-radius:999px;padding:.4rem .85rem;}
 
     /* ── SERVICE CARDS (icon only, no photo) ── */
-    .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
     .svc-card{background:#fff;border:1px solid rgba(184,137,42,.18);border-radius:var(--r);padding:1.4rem 1.2rem;cursor:pointer;transition:box-shadow .2s,transform .2s;}
     .svc-card:hover{box-shadow:0 6px 24px rgba(184,137,42,.18);transform:translateY(-3px);}
     .svc-icon{font-size:2rem;margin-bottom:.65rem;}
@@ -124,9 +132,9 @@
     .about-tag{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;color:var(--gold);background:rgba(184,137,42,.1);padding:.3rem .75rem;border-radius:50px;}
 
     /* ── SUB-PAGE HERO ── */
-    .sub-hero{position:relative;height:260px;overflow:hidden;}
-    @media(max-width:480px){.sub-hero{height:200px;}}
-    .sub-hero img{height:100%;filter:brightness(.6);}
+    .sub-hero{position:relative;height:600px;overflow:hidden;background:var(--dark);}
+    @media(max-width:480px){.sub-hero{height:340px;}}
+    .sub-hero img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.6);}
     .sub-hero-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:1rem;}
     .sub-hero-text .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;padding:.3rem .9rem;border-radius:50px;margin-bottom:.8rem;}
     .sub-hero-text h1{font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.5);}
@@ -220,6 +228,11 @@
   <div class="nav-right">
     <span class="nav-link" onclick="goTo('home')">Serviços</span>
     <span class="nav-link" onclick="scrollAbout()">Sobre Nós</span>
+    <div class="lang-switch">
+      <button class="lang-btn" data-lang="pt" onclick="setLang('pt',this)">PT</button>
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr',this)">FR</button>
+    </div>
   </div>
 </nav>
 
@@ -231,7 +244,8 @@
 
   <!-- Hero — foto: PRAIA sign com bandeira de Cabo Verde (foto anexa) -->
   <div class="hero">
-    <img src="https://drive.google.com/thumbnail?id=1YXiHIohpEx-_Sz-SjdoW5CWyt4lKQqo3&sz=w1600" alt="Kaza Katxupa — Grupo Sofia"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia — galeria de fotografias"/>
+    <a class="photo-credit" href="https://pedromoita.wixsite.com/photography/portf%C3%B3lio" target="_blank" rel="noopener">Fotos by Pedro Moita</a>
     <div class="hero-text">
       <h1>Grupo <span>Sofia</span></h1>
       <p>Alojamento, restauração e serviços turísticos em Santiago, Cabo Verde</p>
@@ -264,7 +278,7 @@
         <!-- Pousada Praia Maria -->
         <div class="acc-card" onclick="goTo('hotel')">
           <div class="acc-img">
-            <img src="https://drive.google.com/thumbnail?id=1qtDdP1fBxaNhy13RG9Lz4F7YIpwN4uAg&sz=w800" alt="Pousada Praia Maria"/>
+            <img src="https://drive.google.com/thumbnail?id=1k7tFlbkMf_Jl7ohGVP3vSfBWFLlWWYNp&sz=w800" alt="Pousada Praia Maria"/>
           </div>
           <div class="acc-body">
             <h3>🏨 Pousada Praia Maria</h3>
@@ -309,7 +323,7 @@
         <!-- Vila Prainha -->
         <div class="acc-card" onclick="goTo('prainha')">
           <div class="acc-img">
-            <img src="https://drive.google.com/thumbnail?id=1JPeh6NzMQVgpVFgO9NDi20xNHXrDg6qe&sz=w800" alt="Vila Prainha"/>
+            <img src="https://drive.google.com/thumbnail?id=1JPeh6NzMQVgpVFgO9NDi20xNHXrDg6qe&sz=w800" alt="Vila Prainha" style="object-fit:contain;background:var(--sand2);"/>
           </div>
           <div class="acc-body">
             <h3>🌊 Vila Prainha</h3>
@@ -324,7 +338,7 @@
         <!-- Casa Glória -->
         <div class="acc-card" onclick="goTo('gloria')">
           <div class="acc-img">
-            <img src="https://drive.google.com/thumbnail?id=1bHwqNiNgpTa-5d2sN_9Fpu6UIjp36Wla&sz=w1200" alt="Casa Glória"/>
+            <img src="https://drive.google.com/thumbnail?id=1bHwqNiNgpTa-5d2sN_9Fpu6UIjp36Wla&sz=w1200" alt="Casa Glória" style="object-fit:contain;background:var(--sand2);"/>
           </div>
           <div class="acc-body">
             <h3>✨ Casa Glória</h3>
@@ -526,7 +540,7 @@
 ══════════════════════════════════════ -->
 <div id="page-hotel" class="page">
   <div class="sub-hero">
-    <img src="https://drive.google.com/thumbnail?id=1qtDdP1fBxaNhy13RG9Lz4F7YIpwN4uAg&sz=w1600" alt="Pousada Praia Maria"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Hotel · Plateau · Rua Pedonal</div>
       <h1>Pousada Praia Maria</h1>
@@ -541,11 +555,11 @@
       <p>No coração do Plateau, na mais movimentada rua pedonal de Praia, a Pousada Praia Maria combina o charme histórico de um prédio colonial com atendimento próximo e personalizado. A localização é a melhor da cidade — avaliada com 9.5 pelos hóspedes. Pequeno-almoço opcional no Kaza Katxupa mesmo em frente, e serviço de transfer disponível. Fuja das taxas das plataformas e reserve diretamente connosco!</p>
     </div>
     <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;grid-column:span 2;"><img src="https://drive.google.com/thumbnail?id=13GQOD2Tv78Rmlw6K8b5ip94LUVzl3H22&sz=w800" alt="Pousada Praia Maria"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1s0kPLMK1l7AwOCHoKEOq4E5ozxUmfIQd&sz=w800" alt="Pousada Praia Maria"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1ONIitaIbAUM-KeQyjmWiSgu_R7LcWg3H&sz=w800" alt="Pousada Praia Maria"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1lGMplota0W8Zp07txLr8SoNCbDsnmogT&sz=w800" alt="Pousada Praia Maria"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1qtDdP1fBxaNhy13RG9Lz4F7YIpwN4uAg&sz=w800" alt="Pousada Praia Maria"/></div>
+      <div class="gal-img" style="height:260px;grid-column:span 2;"><img src="https://drive.google.com/thumbnail?id=13GQOD2Tv78Rmlw6K8b5ip94LUVzl3H22&sz=w800" alt="Pousada Praia Maria" style="object-position:center 35%;"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1s0kPLMK1l7AwOCHoKEOq4E5ozxUmfIQd&sz=w800" alt="Pousada Praia Maria" style="object-position:center 35%;"/></div>
+      <div class="gal-img" style="height:230px;"><img src="https://drive.google.com/thumbnail?id=1ONIitaIbAUM-KeQyjmWiSgu_R7LcWg3H&sz=w800" alt="Pousada Praia Maria" style="object-position:center 35%;"/></div>
+      <div class="gal-img" style="height:230px;"><img src="https://drive.google.com/thumbnail?id=1lGMplota0W8Zp07txLr8SoNCbDsnmogT&sz=w800" alt="Pousada Praia Maria" style="object-position:center 35%;"/></div>
+      <div class="gal-img" style="height:230px;"><img src="https://drive.google.com/thumbnail?id=1qtDdP1fBxaNhy13RG9Lz4F7YIpwN4uAg&sz=w800" alt="Pousada Praia Maria" style="object-position:center 35%;"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">🏛️</div><h4>Prédio Colonial</h4><p>Charme histórico no Plateau</p></div>
@@ -557,10 +571,11 @@
     </div>
     <div class="price-box mt2">
       <h3>💰 Preços</h3>
-      <div class="price-row"><span class="price-label">Single</span><span class="price-value">Consulte-nos</span></div>
-      <div class="price-row"><span class="price-label">Double</span><span class="price-value">Consulte-nos</span></div>
-      <div class="price-row"><span class="price-label">Twin</span><span class="price-value">Consulte-nos</span></div>
-      <div class="price-row"><span class="price-label">King Suite c/ Varanda</span><span class="price-value">Consulte-nos</span></div>
+      <div class="price-row"><span class="price-label">Single</span><span class="price-value">5.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Duplo</span><span class="price-value">6.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Twin</span><span class="price-value">6.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Suite</span><span class="price-value">7.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Cama extra</span><span class="price-value">2.000 CVE + taxa turística</span></div>
       <div class="price-row"><span class="price-label">Pequeno-almoço (Kaza Katxupa)</span><span class="price-value">700 CVE / pessoa</span></div>
       <div class="price-row"><span class="price-label">Transfer aeroporto (manhã)</span><span class="price-value">1.500 CVE</span></div>
       <div class="price-row"><span class="price-label">Transfer aeroporto (noite)</span><span class="price-value">2.000 CVE</span></div>
@@ -582,7 +597,7 @@
 ══════════════════════════════════════ -->
 <div id="page-txada" class="page">
   <div class="sub-hero">
-    <img src="https://drive.google.com/thumbnail?id=1Dz3tyW_-0wnQyDjZU5c1bt9ZO8_71wl7&sz=w1600" alt="Txada Hostel"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Hostel · Achada de Santo António · Praia</div>
       <h1>Txada Hostel</h1>
@@ -633,7 +648,7 @@
 ══════════════════════════════════════ -->
 <div id="page-estrela" class="page">
   <div class="sub-hero">
-    <img src="https://drive.google.com/thumbnail?id=1FEBX2Zm0uR3NqAbkKvhwVN3VH5FGyXwV&sz=w1600" alt="Casa Estrela"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Guesthouse · Beachfront · Praia</div>
       <h1>Casa Estrela</h1>
@@ -664,7 +679,7 @@
     </div>
     <div class="price-box mt2">
       <h3>💰 Preços</h3>
-      <div class="price-row"><span class="price-label">Quarto / noite</span><span class="price-value">Consulte-nos</span></div>
+      <div class="price-row"><span class="price-label">Quarto duplo / noite</span><span class="price-value">5.000 CVE + taxa turística</span></div>
     </div>
     <div class="cta-box mt3">
       <h2>Reservar Casa Estrela</h2>
@@ -683,7 +698,7 @@
 ══════════════════════════════════════ -->
 <div id="page-prainha" class="page">
   <div class="sub-hero">
-    <img src="https://drive.google.com/thumbnail?id=1JPeh6NzMQVgpVFgO9NDi20xNHXrDg6qe&sz=w1600" alt="Vila Prainha"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Apartamentos · Prainha · Zona Diplomática</div>
       <h1>Vila Prainha</h1>
@@ -698,7 +713,7 @@
       <p>Apartamentos modernos e elegantes na melhor zona de Praia — a Prainha. Situados na área diplomática, rodeados de embaixadas e residências oficiais, oferecem máxima segurança e tranquilidade. A 3 minutos a pé da Prainha.</p>
     </div>
     <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;grid-column:span 2;"><img src="https://drive.google.com/thumbnail?id=1Q7a-4XamLRMNuQkAm83kJ3WHy5eYv_rk&sz=w800" alt="Vila Prainha — sala"/></div>
+      <div class="gal-img" style="height:220px;grid-column:span 2;"><img src="https://drive.google.com/thumbnail?id=1Q7a-4XamLRMNuQkAm83kJ3WHy5eYv_rk&sz=w800" alt="Vila Prainha — sala" style="object-position:center 60%;"/></div>
       <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1px-UlEZ2G3YKCxxKsmJgVV6g-Ofcs_2H&sz=w800" alt="Vila Prainha — quarto"/></div>
       <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1mABX9ScpcRXY2_u7nZQRN2qE1IWSZ3jf&sz=w800" alt="Vila Prainha — cozinha"/></div>
       <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1zVrXMwOzATzj8bNhHqpCEVPr7X9Yeiv0&sz=w800" alt="Vila Prainha — quarto"/></div>
@@ -714,8 +729,10 @@
     </div>
     <div class="price-box mt2">
       <h3>💰 Preços</h3>
-      <div class="price-row"><span class="price-label">Apartamento T1 / noite</span><span class="price-value">Consulte-nos</span></div>
-      <div class="price-row"><span class="price-label">Apartamento T2 / noite</span><span class="price-value">Consulte-nos</span></div>
+      <div class="price-row"><span class="price-label">Vila Prainha 1</span><span class="price-value">6.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Vila Prainha 2</span><span class="price-value">6.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Vila Prainha 3</span><span class="price-value">5.000 CVE + taxa turística</span></div>
+      <div class="price-row"><span class="price-label">Vila Prainha T3</span><span class="price-value">15.000 CVE + taxa turística</span></div>
       <div class="price-row"><span class="price-label">Estacionamento</span><span class="price-value">Gratuito</span></div>
       <div class="price-row"><span class="price-label">Check-in / Check-out</span><span class="price-value">14h · 11-12h</span></div>
     </div>
@@ -736,7 +753,7 @@
 ══════════════════════════════════════ -->
 <div id="page-gloria" class="page">
   <div class="sub-hero">
-    <img src="https://drive.google.com/thumbnail?id=1bHwqNiNgpTa-5d2sN_9Fpu6UIjp36Wla&sz=w1200" alt="Casa Glória"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Apartamento · Prainha · Airbnb</div>
       <h1>Casa Glória</h1>
@@ -751,11 +768,11 @@
       <p>A Casa Glória é o refúgio perfeito na Prainha da Cidade da Praia. A poucos passos do mar e da tranquila Praia da Prainha, é o ponto de partida ideal para descobrir a capital de Cabo Verde com charme e tranquilidade. Quarto amplo com cama king, sala espaçosa, cozinha equipada, ar condicionado, internet rápida e estacionamento gratuito. Um apartamento acolhedor com toda a autenticidade cabo-verdiana.</p>
     </div>
     <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;grid-column:span 2;"><img src="https://drive.google.com/thumbnail?id=1lc-ekVKDZIapy9Pv-uRfxC5LDuAgsGBA&sz=w800" alt="Casa Glória"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1lc-ekVKDZIapy9Pv-uRfxC5LDuAgsGBA&sz=w800" alt="Casa Glória"/></div>
       <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=16-dohmFKyXGNLRLiGkyPW11cG02zMU3b&sz=w800" alt="Casa Glória"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=145XkfShdwCW7JbZJnN0UkkJNJpTzuvoI&sz=w800" alt="Casa Glória"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=1KmRtEx7spsQSHXcc1h0fxEAERr6AmT_v&sz=w800" alt="Casa Glória"/></div>
-      <div class="gal-img" style="height:190px;"><img src="https://drive.google.com/thumbnail?id=15rO-ZaHclIbSYa_EAxnSt2YspTdz2K3e&sz=w800" alt="Casa Glória"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=145XkfShdwCW7JbZJnN0UkkJNJpTzuvoI&sz=w800" alt="Casa Glória"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1KmRtEx7spsQSHXcc1h0fxEAERr6AmT_v&sz=w800" alt="Casa Glória"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=15rO-ZaHclIbSYa_EAxnSt2YspTdz2K3e&sz=w800" alt="Casa Glória"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">🌊</div><h4>Acesso à Praia</h4><p>A passos da Prainha</p></div>
@@ -767,7 +784,7 @@
     </div>
     <div class="price-box mt2">
       <h3>💰 Preços</h3>
-      <div class="price-row"><span class="price-label">Apartamento / noite (até 2 hóspedes)</span><span class="price-value">Ver preços no Airbnb</span></div>
+      <div class="price-row"><span class="price-label">Quarto duplo / noite</span><span class="price-value">5.000 CVE + taxa turística</span></div>
       <div class="price-row"><span class="price-label">Estacionamento</span><span class="price-value">Gratuito</span></div>
       <div class="price-row"><span class="price-label">Check-in / Check-out</span><span class="price-value">15h · 12h</span></div>
       <div class="price-row"><span class="price-label">Self check-in</span><span class="price-value">Funcionários do edifício</span></div>
@@ -790,7 +807,7 @@
 ══════════════════════════════════════ -->
 <div id="page-transfers" class="page">
   <div class="sub-hero">
-    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80&auto=format&fit=crop" alt="Transfer Aeroporto"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Transfer · Aeroporto → Hotel</div>
       <h1>Transfer Aeroporto</h1>
@@ -805,9 +822,9 @@
       <p>Chegue descansado ao seu alojamento. Transfer privado direto do Aeroporto Internacional Amílcar Cabral para a sua porta, com pontualidade e conforto. Disponível em ida, volta ou ida+volta. Reserva rápida pelo WhatsApp.</p>
     </div>
     <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80&auto=format&fit=crop" alt="Viatura"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80&auto=format&fit=crop" alt="Aeroporto"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80&auto=format&fit=crop" alt="Estrada Santiago"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=15ou6niPVa4tNcUuCGCfTowKkp4wEVCTQ&sz=w800" alt="Cidade da Praia"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1_HuYDGHix57wtu13A-UPQa-08fYrAzGI&sz=w800" alt="Cidade da Praia"/></div>
+      <div class="gal-img" style="height:220px;"><img src="https://drive.google.com/thumbnail?id=1OARwH4_vGVfbzyNJwF0QIMt5KuLMO3PG&sz=w800" alt="Cidade da Praia"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">✈️</div><h4>Ida</h4><p>Aeroporto → Alojamento</p></div>
@@ -841,7 +858,7 @@
 ══════════════════════════════════════ -->
 <div id="page-aluguer" class="page">
   <div class="sub-hero">
-    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400&q=80&auto=format&fit=crop" alt="Aluguer de Carros"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Rent-a-Car · Santiago</div>
       <h1>Aluguer de Carros</h1>
@@ -855,10 +872,9 @@
       <h2>Aluguer de Carros</h2>
       <p>Explore a ilha de Santiago ao seu ritmo com o nosso serviço de aluguer premium. VW ID.3 elétrico (eco-friendly) e Hyundai Tucson SUV, com opção self-drive ou com motorista dedicado. Perfeito para excursões, reuniões ou simplesmente explorar toda a ilha.</p>
     </div>
-    <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80&auto=format&fit=crop" alt="VW ID.3"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1493238792000-8be6a0e5546c?w=600&q=80&auto=format&fit=crop" alt="Hyundai Tucson"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80&auto=format&fit=crop" alt="Estradas de Santiago"/></div>
+    <div class="gallery gallery-2 mt2">
+      <div class="gal-img" style="height:260px;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/2020%20Volkswagen%20ID.3%20Front.jpg?width=800" alt="Volkswagen ID.3 elétrico"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Tucson%20N%20Line%20NX4%20Phantom%20Black%20Pearl%20(4).jpg?width=800" alt="Hyundai Tucson SUV preto"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">⚡</div><h4>VW ID.3</h4><p>100% elétrico</p></div>
@@ -871,9 +887,9 @@
     <div class="price-box mt2">
       <h3>💰 Preços</h3>
       <div class="price-row"><span class="price-label">VW ID.3 (self-drive)</span><span class="price-value">7.000 CVE / dia</span></div>
-      <div class="price-row"><span class="price-label">Hyundai Tucson (sem condutor)</span><span class="price-value">Consulte-nos</span></div>
+      <div class="price-row"><span class="price-label">Hyundai Tucson (sem condutor)</span><span class="price-value">8.000 CVE / dia</span></div>
       <div class="price-row"><span class="price-label">Hyundai Tucson (com condutor, até 18h)</span><span class="price-value">15.000 CVE / dia</span></div>
-      <div class="price-row"><span class="price-label">Após as 18h</span><span class="price-value">Condições especiais — consulte</span></div>
+      <div class="price-row"><span class="price-label">Hyundai Tucson (com condutor, após 18h)</span><span class="price-value">Consultar preços</span></div>
     </div>
     <div class="cta-box mt3">
       <h2>Reservar Viatura</h2>
@@ -892,7 +908,7 @@
 ══════════════════════════════════════ -->
 <div id="page-passeios" class="page">
   <div class="sub-hero">
-    <img src="https://images.unsplash.com/photo-1625586347188-b7165879cb71?w=1400&q=80&auto=format&fit=crop" alt="Passeios em Santiago"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Turismo · Ilha de Santiago</div>
       <h1>Passeios Turísticos</h1>
@@ -907,9 +923,12 @@
       <p>Conheça Santiago a fundo com guias locais apaixonados pela ilha. Da Cidade Velha — Património Mundial da UNESCO — às praias paradisíacas de Tarrafal, passando pelas serras verdes e mercados coloridos. Roteiros à medida para individuais, casais, famílias e grupos.</p>
     </div>
     <div class="gallery gallery-3 mt2">
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1625586347188-b7165879cb71?w=600&q=80&auto=format&fit=crop" alt="Santiago"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1621944668311-7a97c80f0190?w=600&q=80&auto=format&fit=crop" alt="Tarrafal"/></div>
-      <div class="gal-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1583880613055-cd1f1384b5d6?w=600&q=80&auto=format&fit=crop" alt="Costa"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1Fn7hilxoWSLtLqYBlykoN77WWLmdUPXy&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1ucBHILfWYR_EOrX9ClPZnVnVb8LCHHyZ&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1BVy5hoOWDuKTomofi39cEVu3S_8Js5kx&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1WPdibARPUHsZiw40QCwbTdTNxit031It&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=1Ql7wMrnrg0tUekca6rSTQjtZAXPAE1WV&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
+      <div class="gal-img" style="height:260px;"><img src="https://drive.google.com/thumbnail?id=14agN5YLNUjYrxAzhazPk7UOqZoEPDrcN&sz=w800" alt="Passeios em Santiago" style="object-fit:contain;background:var(--sand2);"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">🏛️</div><h4>Cidade Velha</h4><p>Património Mundial UNESCO</p></div>
@@ -943,7 +962,7 @@
 ══════════════════════════════════════ -->
 <div id="page-bagagem" class="page">
   <div class="sub-hero">
-    <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=80&auto=format&fit=crop" alt="Guarda-Malas"/>
+    <img src="https://drive.google.com/thumbnail?id=1n-n56xNaWJPazIrWAuyVc-XE93VayFi3&sz=w1600" alt="Grupo Sofia"/>
     <div class="sub-hero-text">
       <div class="badge">Serviço · Plateau · Praia</div>
       <h1>Guarda-Malas</h1>
@@ -957,9 +976,8 @@
       <h2>Serviço de Guarda-Malas</h2>
       <p>Ao lado do Café Sofia, no Plateau. Guarde as suas malas e explore a cidade em plena liberdade — sem peso. Ideal para quem fez check-out e ainda tem horas antes do voo. Espaço seguro, preço fixo por dia completo, aceita malas de todos os tamanhos.</p>
     </div>
-    <div class="gallery gallery-2 mt2">
-      <div class="gal-img" style="height:240px;"><img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=700&q=80&auto=format&fit=crop" alt="Malas guardadas"/></div>
-      <div class="gal-img" style="height:240px;"><img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=700&q=80&auto=format&fit=crop" alt="Armazenamento"/></div>
+    <div class="gallery mt2">
+      <div class="gal-img" style="height:360px;"><img src="https://drive.google.com/thumbnail?id=1_bec01fCqNhiFALBmLdubdivDad9YP20&sz=w1000" alt="Guarda-Malas" style="object-fit:contain;background:var(--sand2);"/></div>
     </div>
     <div class="feat-row mt2">
       <div class="feat"><div class="feat-icon">📍</div><h4>Plateau</h4><p>Ao lado do Café Sofia</p></div>
@@ -1021,6 +1039,352 @@
     }
   }
 
+  /* ── TRADUÇÃO / TRANSLATION ── */
+  const I18N = {
+    en: {
+      "Serviços":"Services","Sobre Nós":"About Us","← Voltar":"← Back","Ver →":"View →",
+      "Consulte-nos":"Contact us","Gratuito":"Free","💰 Preços":"💰 Prices",
+      "Alojamento, restauração e serviços turísticos em Santiago, Cabo Verde":"Accommodation, dining and tourism services in Santiago, Cape Verde",
+      "Fotos by Pedro Moita":"Photos by Pedro Moita",
+      "Onde ficar em Santiago":"Where to stay in Santiago","Alojamento":"Accommodation",
+      "Escolha o alojamento ideal para a sua estadia em Praia":"Choose the ideal accommodation for your stay in Praia",
+      "Hotel colonial no coração do Plateau, rua pedonal. 15 quartos, receção 24h.":"Colonial hotel in the heart of Plateau, on a pedestrian street. 15 rooms, 24h reception.",
+      "★ 8.0 · 1.015 avaliações":"★ 8.0 · 1,015 reviews",
+      "Hotel situado num dos maiores bairros da capital, com restaurantes, lojas e serviços por perto. A 1 km da Praia de Quebra Canela. Ideal para visitas rápidas ou trabalho.":"Hotel located in one of the capital's largest neighbourhoods, with restaurants, shops and services nearby. 1 km from Quebra Canela Beach. Ideal for short visits or work.",
+      "★ 7.2 · 524 avaliações":"★ 7.2 · 524 reviews",
+      "A 1 min a pé da Prainha, em zona privilegiada e tranquila. Uma autêntica galeria de arte, para umas férias incríveis.":"A 1-minute walk from Prainha, in a privileged and quiet area. A genuine art gallery, for an amazing holiday.",
+      "★ 7.3 · 176 avaliações":"★ 7.3 · 176 reviews",
+      "A 3 min da Prainha, em zona privilegiada e tranquila. Casa toda equipada, internet rápida — ideal para trabalho ou férias em família.":"A 3-minute walk from Prainha, in a privileged and quiet area. Fully equipped house, fast internet — ideal for work or family holidays.",
+      "★ 7.5 · 115 avaliações":"★ 7.5 · 115 reviews",
+      "O que podemos fazer por si":"What we can do for you",
+      "Transporte, mobilidade e experiências em Santiago":"Transport, mobility and experiences in Santiago",
+      "Transfer Aeroporto":"Airport Transfer",
+      "Ida, volta ou ida+volta. Do aeroporto direto ao seu alojamento.":"One-way, return or round trip. From the airport straight to your accommodation.",
+      "Aluguer de Carros":"Car Rental",
+      "VW ID.3 elétrico e Hyundai Tucson SUV. Com ou sem motorista.":"Electric VW ID.3 and Hyundai Tucson SUV. With or without driver.",
+      "A partir 7.000 CVE/dia":"From €70/day",
+      "Passeios Turísticos":"Sightseeing Tours",
+      "Cidade Velha, Serra Malagueta, Tarrafal. Guias locais, roteiros à medida.":"Cidade Velha, Serra Malagueta, Tarrafal. Local guides, tailor-made itineraries.",
+      "Guarda-Malas":"Luggage Storage",
+      "Ao lado do Café Sofia, no Plateau. Preço fixo por dia completo.":"Next to Café Sofia, in Plateau. Fixed price per full day.",
+      "500 CVE / dia completo":"€5 / full day",
+      "Outros Serviços · Restauração":"Other Services · Dining","Restaurantes":"Restaurants",
+      "Parceiros de confiança. Tratamos da reserva por si!":"Trusted partners. We handle the booking for you!",
+      "A cozinha cabo-verdiana mais autêntica da Praia. Katxupa de peixe, porco e vegetariana num ambiente vibrante.":"The most authentic Cape Verdean cuisine in Praia. Fish, pork and vegetarian katxupa in a vibrant atmosphere.",
+      "Rua 5 de Julho, Plateau — em frente à Pousada Praia Maria":"Rua 5 de Julho, Plateau — opposite Pousada Praia Maria",
+      "Aberto todos os dias · Todas as refeições":"Open every day · All meals",
+      "Equipa: Português · Inglês · Francês":"Team: Portuguese · English · French",
+      "💰 Preços muito acessíveis":"💰 Very affordable prices",
+      "O ponto de encontro do Plateau. Café fresquinho, sumos naturais e pastéis caseiros num ambiente alegre, com música ao vivo.":"The Plateau meeting point. Fresh coffee, natural juices and homemade pastries in a cheerful atmosphere, with live music.",
+      "Plateau, Praia, Santiago, Cabo Verde":"Plateau, Praia, Santiago, Cape Verde","Música ao vivo":"Live music",
+      "💰 Consulte preços — acessíveis para todos":"💰 Ask for prices — affordable for everyone",
+      "O melhor sushi de Santiago. Rolos frescos, nigiri e missô em ambiente moderno no Complexo Ondas do Mar.":"The best sushi in Santiago. Fresh rolls, nigiri and miso in a modern setting at Complexo Ondas do Mar.",
+      "18h – 23h, fecha domingo":"6pm – 11pm, closed Sunday",
+      "💰 Consulte ementa em titisushi.com":"💰 See menu at titisushi.com",
+      "Quem somos":"Who we are","O Grupo Sofia":"The Sofia Group",
+      "Somos uma empresa 100% cabo-verdiana, com mais de 30 anos de presença no mercado da hospitalidade e turismo em Santiago. O nosso grupo é liderado por uma mulher cabo-verdiana, com orgulho e paixão pelo que fazemos.":"We are a 100% Cape Verdean company, with over 30 years in the hospitality and tourism market in Santiago. Our group is led by a Cape Verdean woman, with pride and passion for what we do.",
+      "Reunimos alojamento, restauração, transporte e turismo para oferecer uma experiência completa — do aeroporto ao hotel, do pequeno-almoço ao passeio pela ilha. Cada detalhe é pensado com carinho para que a sua estadia em Cabo Verde seja inesquecível.":"We bring together accommodation, dining, transport and tourism to offer a complete experience — from the airport to the hotel, from breakfast to a tour of the island. Every detail is thought out with care so that your stay in Cape Verde is unforgettable.",
+      "Conte connosco. Estamos aqui para ajudar muito!":"Count on us. We're here to help!",
+      "🇨🇻 100% Cabo-Verdiana":"🇨🇻 100% Cape Verdean","👩‍💼 Liderada por mulher":"👩‍💼 Woman-led",
+      "🏅 +30 anos de experiência":"🏅 +30 years of experience","💛 Sempre disponíveis":"💛 Always available",
+      "Alojamentos":"Accommodations","Anos":"Years","Disponíveis":"Available",
+      "Hotel · Plateau · Rua Pedonal":"Hotel · Plateau · Pedestrian Street",
+      "No coração do Plateau — Avaliação 8.0 · Localização 9.5":"In the heart of Plateau — Rating 8.0 · Location 9.5",
+      "Hotel Colonial · Plateau · Praia":"Colonial Hotel · Plateau · Praia",
+      "No coração do Plateau, na mais movimentada rua pedonal de Praia, a Pousada Praia Maria combina o charme histórico de um prédio colonial com atendimento próximo e personalizado. A localização é a melhor da cidade — avaliada com 9.5 pelos hóspedes. Pequeno-almoço opcional no Kaza Katxupa mesmo em frente, e serviço de transfer disponível. Fuja das taxas das plataformas e reserve diretamente connosco!":"In the heart of Plateau, on Praia's busiest pedestrian street, Pousada Praia Maria combines the historic charm of a colonial building with close, personalised service. The location is the best in the city — rated 9.5 by guests. Optional breakfast at Kaza Katxupa right across the street, and transfer service available. Skip the platform fees and book directly with us!",
+      "Prédio Colonial":"Colonial Building","Charme histórico no Plateau":"Historic charm in Plateau",
+      "Rua Pedonal":"Pedestrian Street","Melhor localização da Praia":"Best location in Praia",
+      "15 Quartos":"15 Rooms","Receção 24h":"24h Reception","Sempre disponíveis":"Always available",
+      "Pequeno-almoço":"Breakfast","700 CVE no Kaza Katxupa":"€7 at Kaza Katxupa",
+      "WiFi Grátis":"Free WiFi","Em todo o hotel":"Throughout the hotel",
+      "Duplo":"Double","Cama extra":"Extra bed",
+      "5.000 CVE + taxa turística":"€50 + tourist tax","6.000 CVE + taxa turística":"€60 + tourist tax",
+      "7.000 CVE + taxa turística":"€70 + tourist tax","2.000 CVE + taxa turística":"€20 + tourist tax",
+      "15.000 CVE + taxa turística":"€150 + tourist tax",
+      "Pequeno-almoço (Kaza Katxupa)":"Breakfast (Kaza Katxupa)","700 CVE / pessoa":"€7 / person",
+      "Transfer aeroporto (manhã)":"Airport transfer (morning)","1.500 CVE":"€15",
+      "Transfer aeroporto (noite)":"Airport transfer (night)","2.000 CVE":"€20",
+      "Reservar Quarto":"Book a Room",
+      "Reserve diretamente e evite comissões. Confirmação imediata pelo WhatsApp.":"Book directly and avoid commissions. Instant confirmation via WhatsApp.",
+      "Ambiente animado, perto do mar — 524 avaliações":"Lively atmosphere, close to the sea — 524 reviews",
+      "O Txada Hostel está situado em Achada de Santo António, a 3 km do Plateau, coração da cidade, e a menos de 1 km das praias de Quebra Canela e Prainha. Com um ambiente jovem e acolhedor, oferece alojamento com ar condicionado, sala comum e fácil acesso à Praia de Quebra Canela. Ideal para viajantes que procuram boa relação qualidade-preço.":"Txada Hostel is located in Achada de Santo António, 3 km from Plateau, the heart of the city, and less than 1 km from Quebra Canela and Prainha beaches. With a young and welcoming atmosphere, it offers accommodation with air conditioning, a common room and easy access to Quebra Canela Beach. Ideal for travellers looking for good value for money.",
+      "Ar Condicionado":"Air Conditioning","Em todos os quartos":"In all rooms",
+      "Sala Comum":"Common Room","Espaço partilhado confortável":"Comfortable shared space",
+      "Perto do Mar":"Close to the Sea","1 km da praia":"1 km from the beach",
+      "Maior bairro da capital, tudo o que precisa por perto · 3 km do centro":"Largest neighbourhood in the capital, everything you need nearby · 3 km from the centre",
+      "Bom Preço":"Good Price","Ótima relação qualidade-preço":"Great value for money",
+      "Social":"Social","Ambiente jovem e animado":"Young and lively atmosphere",
+      "Cama em dormitório":"Dorm bed","Quarto privado":"Private room",
+      "Reservar no Txada Hostel":"Book at Txada Hostel",
+      "Contacte-nos pelo WhatsApp ou email para verificar disponibilidade.":"Contact us via WhatsApp or email to check availability.",
+      "Sea & Art — À beira-mar em Praia":"Sea & Art — By the sea in Praia",
+      "A Casa Estrela é uma guesthouse única e artística mesmo à beira-mar em Praia. Beachfront, a apenas passos da Praia da Prainha, combina arte, conforto e tranquilidade numa localização verdadeiramente privilegiada. Um ambiente com muita arte e decoração linda e particular, de descoberta e bem-estar, ideal para viajantes que procuram algo especial.":"Casa Estrela is a unique, artistic guesthouse right by the sea in Praia. Beachfront, just steps from Prainha Beach, it combines art, comfort and tranquillity in a truly privileged location. An environment full of art and beautiful, distinctive decor, of discovery and wellbeing, ideal for travellers looking for something special.",
+      "À beira da Praia da Prainha":"By Prainha Beach","Ambiente artístico único":"Unique artistic atmosphere",
+      "Internet em toda a casa":"Internet throughout the house","Praia Centro":"City Centre",
+      "1,1 km do centro da cidade":"1.1 km from the city centre",
+      "Vista Mar":"Sea View","Acordar com o mar à porta":"Wake up with the sea at your door",
+      "Tranquilidade":"Tranquillity","Muitos ambientes para relaxar":"Many spaces to relax",
+      "Quarto duplo / noite":"Double room / night","Reservar Casa Estrela":"Book Casa Estrela",
+      "Contacte-nos para verificar disponibilidade e obter o melhor preço.":"Contact us to check availability and get the best price.",
+      "Apartamentos · Prainha · Zona Diplomática":"Apartments · Prainha · Diplomatic Zone",
+      "Apartamentos elegantes a 3 min da praia — Localização 8.7":"Elegant apartments 3 min from the beach — Location 8.7",
+      "Apartamentos · Prainha · Praia":"Apartments · Prainha · Praia",
+      "Apartamentos modernos e elegantes na melhor zona de Praia — a Prainha. Situados na área diplomática, rodeados de embaixadas e residências oficiais, oferecem máxima segurança e tranquilidade. A 3 minutos a pé da Prainha.":"Modern, elegant apartments in the best area of Praia — Prainha. Located in the diplomatic area, surrounded by embassies and official residences, they offer maximum security and tranquillity. A 3-minute walk from Prainha.",
+      "3 min da Praia":"3 min from Beach","Prainha a pé":"Prainha on foot",
+      "Estacionamento":"Parking","Gratuito no local":"Free on site",
+      "Cozinha Equipada":"Equipped Kitchen","Em todos os apartamentos":"In all apartments",
+      "Segurança 24h":"24h Security","Zona diplomática":"Diplomatic zone",
+      "Internet rápida":"Fast internet","Trabalho":"Work","Ideal para quem procura trabalhar":"Ideal for those looking to work",
+      "Check-in / Check-out":"Check-in / Check-out","14h · 11-12h":"2pm · 11am-12pm",
+      "Reservar na Vila Prainha":"Book at Vila Prainha",
+      "Contacte-nos para verificar disponibilidade e proposta personalizada.":"Contact us to check availability and a personalised offer.",
+      "Apartamento · Prainha · Airbnb":"Apartment · Prainha · Airbnb",
+      "Tranquilidade na Prainha — Grupo Sofia":"Tranquillity in Prainha — Grupo Sofia",
+      "Apartamento Completo · Prainha":"Full Apartment · Prainha",
+      "A Casa Glória é o refúgio perfeito na Prainha da Cidade da Praia. A poucos passos do mar e da tranquila Praia da Prainha, é o ponto de partida ideal para descobrir a capital de Cabo Verde com charme e tranquilidade. Quarto amplo com cama king, sala espaçosa, cozinha equipada, ar condicionado, internet rápida e estacionamento gratuito. Um apartamento acolhedor com toda a autenticidade cabo-verdiana.":"Casa Glória is the perfect retreat in Prainha, Cidade da Praia. Just steps from the sea and the quiet Prainha Beach, it is the ideal starting point to discover the capital of Cape Verde with charm and tranquillity. Spacious bedroom with king bed, roomy living room, equipped kitchen, air conditioning, fast internet and free parking. A cosy apartment with all the authenticity of Cape Verde.",
+      "Acesso à Praia":"Beach Access","A passos da Prainha":"Steps from Prainha",
+      "Cama King":"King Bed","Quarto + sofá na sala":"Bedroom + sofa in living room",
+      "Autonomia total":"Full autonomy","Conforto térmico":"Thermal comfort",
+      "Internet Rápida":"Fast Internet","WiFi incluído":"WiFi included",
+      "Self check-in":"Self check-in","Funcionários do edifício":"Building staff","15h · 12h":"3pm · 12pm",
+      "Reservar Casa Glória":"Book Casa Glória",
+      "Contacte-nos pelo WhatsApp ou reserve diretamente no Airbnb.":"Contact us via WhatsApp or book directly on Airbnb.",
+      "Transfer · Aeroporto → Hotel":"Transfer · Airport → Hotel",
+      "Do aeroporto ao seu alojamento, sem complicações":"From the airport to your accommodation, hassle-free",
+      "Transporte Privado · Santiago":"Private Transport · Santiago","Serviço de Transfer":"Transfer Service",
+      "Chegue descansado ao seu alojamento. Transfer privado direto do Aeroporto Internacional Amílcar Cabral para a sua porta, com pontualidade e conforto. Disponível em ida, volta ou ida+volta. Reserva rápida pelo WhatsApp.":"Arrive relaxed at your accommodation. Private transfer straight from Amílcar Cabral International Airport to your door, punctual and comfortable. Available one-way, return or round trip. Quick booking via WhatsApp.",
+      "Ida":"One-way","Aeroporto → Alojamento":"Airport → Accommodation",
+      "Volta":"Return","Alojamento → Aeroporto":"Accommodation → Airport",
+      "Ida + Volta":"Round Trip","Os dois trajetos juntos":"Both trips together",
+      "Pontual":"Punctual","Sempre a tempo do voo":"Always on time for the flight",
+      "Confortável":"Comfortable","Viatura espaçosa e AC":"Spacious vehicle with AC",
+      "Reserva Rápida":"Quick Booking","Confirme pelo WhatsApp":"Confirm via WhatsApp",
+      "Ida (aeroporto → alojamento) — manhã":"One-way (airport → accommodation) — morning",
+      "Ida (aeroporto → alojamento) — noite":"One-way (airport → accommodation) — night",
+      "Volta (alojamento → aeroporto)":"Return (accommodation → airport)",
+      "Pedir Transfer":"Request Transfer",
+      "Diga-nos a data, hora do voo e o alojamento — tratamos de tudo.":"Tell us the date, flight time and accommodation — we'll handle everything.",
+      "Com ou sem motorista — explore Santiago ao seu ritmo":"With or without driver — explore Santiago at your own pace",
+      "Explore a ilha de Santiago ao seu ritmo com o nosso serviço de aluguer premium. VW ID.3 elétrico (eco-friendly) e Hyundai Tucson SUV, com opção self-drive ou com motorista dedicado. Perfeito para excursões, reuniões ou simplesmente explorar toda a ilha.":"Explore the island of Santiago at your own pace with our premium rental service. Electric VW ID.3 (eco-friendly) and Hyundai Tucson SUV, with self-drive or dedicated driver options. Perfect for excursions, meetings or simply exploring the whole island.",
+      "100% elétrico":"100% electric","SUV todo-o-terreno":"All-terrain SUV",
+      "Self-Drive":"Self-Drive","Conduza você mesmo":"Drive yourself",
+      "Com Motorista":"With Driver","Condutor profissional":"Professional driver",
+      "Após 18h":"After 6pm","Condições especiais":"Special conditions",
+      "Toda a Ilha":"Whole Island","Explore Santiago livre":"Explore Santiago freely",
+      "VW ID.3 (self-drive)":"VW ID.3 (self-drive)","7.000 CVE / dia":"€70 / day",
+      "Hyundai Tucson (sem condutor)":"Hyundai Tucson (no driver)","8.000 CVE / dia":"€80 / day",
+      "Hyundai Tucson (com condutor, até 18h)":"Hyundai Tucson (with driver, until 6pm)","15.000 CVE / dia":"€150 / day",
+      "Hyundai Tucson (com condutor, após 18h)":"Hyundai Tucson (with driver, after 6pm)","Consultar preços":"Ask for prices",
+      "Reservar Viatura":"Book a Vehicle",
+      "Diga-nos as datas e o modelo — confirmamos disponibilidade imediatamente.":"Tell us the dates and model — we'll confirm availability immediately.",
+      "Turismo · Ilha de Santiago":"Tourism · Santiago Island",
+      "Descubra toda a ilha de Santiago connosco":"Discover the whole island of Santiago with us",
+      "Tours Locais · Santiago":"Local Tours · Santiago",
+      "Conheça Santiago a fundo com guias locais apaixonados pela ilha. Da Cidade Velha — Património Mundial da UNESCO — às praias paradisíacas de Tarrafal, passando pelas serras verdes e mercados coloridos. Roteiros à medida para individuais, casais, famílias e grupos.":"Get to know Santiago in depth with local guides passionate about the island. From Cidade Velha — a UNESCO World Heritage Site — to the paradise beaches of Tarrafal, through green mountains and colourful markets. Tailor-made itineraries for individuals, couples, families and groups.",
+      "Património Mundial UNESCO":"UNESCO World Heritage","Parque Natural único":"Unique Natural Park",
+      "Praia paradisíaca do norte":"Paradise beach in the north","A maior praia de Santiago":"The largest beach in Santiago",
+      "Cultura Local":"Local Culture","Mercados e artesanato":"Markets and crafts",
+      "Personalizado":"Personalised","Roteiros à medida":"Tailor-made itineraries",
+      "Meio dia":"Half day","Dia completo":"Full day","Grupos":"Groups",
+      "Preço especial — consulte":"Special price — ask us","Roteiro personalizado":"Custom itinerary",
+      "Orçamento sob consulta":"Quote on request","Reservar Passeio":"Book a Tour",
+      "Diga-nos o que quer ver e quando — criamos o roteiro perfeito.":"Tell us what you want to see and when — we'll create the perfect itinerary.",
+      "Serviço · Plateau · Praia":"Service · Plateau · Praia",
+      "Explore livre — as malas ficam connosco":"Explore freely — leave your bags with us",
+      "Serviço Prático · Plateau":"Practical Service · Plateau","Serviço de Guarda-Malas":"Luggage Storage Service",
+      "Ao lado do Café Sofia, no Plateau. Guarde as suas malas e explore a cidade em plena liberdade — sem peso. Ideal para quem fez check-out e ainda tem horas antes do voo. Espaço seguro, preço fixo por dia completo, aceita malas de todos os tamanhos.":"Next to Café Sofia, in Plateau. Store your bags and explore the city in complete freedom — no weight to carry. Ideal for those who have checked out and still have hours before their flight. Secure space, fixed price per full day, accepts bags of all sizes.",
+      "Ao lado do Café Sofia":"Next to Café Sofia","Seguro":"Secure","Espaço vigiado":"Monitored space",
+      "Todos os Tamanhos":"All Sizes","Malas grandes e pequenas":"Large and small bags",
+      "Ideal Pré-Voo":"Ideal Pre-Flight","Entre check-out e o voo":"Between check-out and flight",
+      "Full Day":"Full Day","Preço fixo por dia":"Fixed price per day",
+      "Explore Livre":"Explore Freely","Sem peso a carregar":"No weight to carry",
+      "Por mala / dia completo (full day)":"Per bag / full day","500 CVE":"€5",
+      "Guardar as Malas":"Store Your Bags","Passe pelo Café Sofia ou contacte-nos com antecedência.":"Stop by Café Sofia or contact us in advance."
+    },
+    fr: {
+      "Serviços":"Services","Sobre Nós":"À propos","← Voltar":"← Retour","Ver →":"Voir →",
+      "Consulte-nos":"Contactez-nous","Gratuito":"Gratuit","💰 Preços":"💰 Tarifs",
+      "Alojamento, restauração e serviços turísticos em Santiago, Cabo Verde":"Hébergement, restauration et services touristiques à Santiago, Cap-Vert",
+      "Fotos by Pedro Moita":"Photos par Pedro Moita",
+      "Onde ficar em Santiago":"Où loger à Santiago","Alojamento":"Hébergement",
+      "Escolha o alojamento ideal para a sua estadia em Praia":"Choisissez l'hébergement idéal pour votre séjour à Praia",
+      "Hotel colonial no coração do Plateau, rua pedonal. 15 quartos, receção 24h.":"Hôtel colonial au cœur du Plateau, rue piétonne. 15 chambres, réception 24h.",
+      "★ 8.0 · 1.015 avaliações":"★ 8.0 · 1 015 avis",
+      "Hotel situado num dos maiores bairros da capital, com restaurantes, lojas e serviços por perto. A 1 km da Praia de Quebra Canela. Ideal para visitas rápidas ou trabalho.":"Hôtel situé dans l'un des plus grands quartiers de la capitale, avec restaurants, boutiques et services à proximité. À 1 km de la plage de Quebra Canela. Idéal pour de courtes visites ou le travail.",
+      "★ 7.2 · 524 avaliações":"★ 7,2 · 524 avis",
+      "A 1 min a pé da Prainha, em zona privilegiada e tranquila. Uma autêntica galeria de arte, para umas férias incríveis.":"À 1 minute à pied de Prainha, dans une zone privilégiée et tranquille. Une véritable galerie d'art, pour des vacances incroyables.",
+      "★ 7.3 · 176 avaliações":"★ 7,3 · 176 avis",
+      "A 3 min da Prainha, em zona privilegiada e tranquila. Casa toda equipada, internet rápida — ideal para trabalho ou férias em família.":"À 3 minutes de Prainha, dans une zone privilégiée et tranquille. Maison entièrement équipée, internet rapide — idéale pour le travail ou les vacances en famille.",
+      "★ 7.5 · 115 avaliações":"★ 7,5 · 115 avis",
+      "O que podemos fazer por si":"Ce que nous pouvons faire pour vous",
+      "Transporte, mobilidade e experiências em Santiago":"Transport, mobilité et expériences à Santiago",
+      "Transfer Aeroporto":"Transfert Aéroport",
+      "Ida, volta ou ida+volta. Do aeroporto direto ao seu alojamento.":"Aller, retour ou aller-retour. De l'aéroport directement à votre hébergement.",
+      "Aluguer de Carros":"Location de Voitures",
+      "VW ID.3 elétrico e Hyundai Tucson SUV. Com ou sem motorista.":"VW ID.3 électrique et SUV Hyundai Tucson. Avec ou sans chauffeur.",
+      "A partir 7.000 CVE/dia":"À partir de 70 €/jour",
+      "Passeios Turísticos":"Excursions Touristiques",
+      "Cidade Velha, Serra Malagueta, Tarrafal. Guias locais, roteiros à medida.":"Cidade Velha, Serra Malagueta, Tarrafal. Guides locaux, itinéraires sur mesure.",
+      "Guarda-Malas":"Consigne à Bagages",
+      "Ao lado do Café Sofia, no Plateau. Preço fixo por dia completo.":"À côté du Café Sofia, au Plateau. Prix fixe par journée complète.",
+      "500 CVE / dia completo":"5 € / journée complète",
+      "Outros Serviços · Restauração":"Autres Services · Restauration","Restaurantes":"Restaurants",
+      "Parceiros de confiança. Tratamos da reserva por si!":"Partenaires de confiance. Nous nous occupons de la réservation pour vous !",
+      "A cozinha cabo-verdiana mais autêntica da Praia. Katxupa de peixe, porco e vegetariana num ambiente vibrante.":"La cuisine cap-verdienne la plus authentique de Praia. Katxupa de poisson, de porc et végétarienne dans une ambiance vibrante.",
+      "Rua 5 de Julho, Plateau — em frente à Pousada Praia Maria":"Rua 5 de Julho, Plateau — en face de la Pousada Praia Maria",
+      "Aberto todos os dias · Todas as refeições":"Ouvert tous les jours · Tous les repas",
+      "Equipa: Português · Inglês · Francês":"Équipe : Portugais · Anglais · Français",
+      "💰 Preços muito acessíveis":"💰 Prix très abordables",
+      "O ponto de encontro do Plateau. Café fresquinho, sumos naturais e pastéis caseiros num ambiente alegre, com música ao vivo.":"Le point de rencontre du Plateau. Café frais, jus naturels et pâtisseries maison dans une ambiance joyeuse, avec musique live.",
+      "Plateau, Praia, Santiago, Cabo Verde":"Plateau, Praia, Santiago, Cap-Vert","Música ao vivo":"Musique live",
+      "💰 Consulte preços — acessíveis para todos":"💰 Demandez les prix — abordables pour tous",
+      "O melhor sushi de Santiago. Rolos frescos, nigiri e missô em ambiente moderno no Complexo Ondas do Mar.":"Le meilleur sushi de Santiago. Rouleaux frais, nigiri et miso dans un cadre moderne au Complexo Ondas do Mar.",
+      "18h – 23h, fecha domingo":"18h – 23h, fermé le dimanche",
+      "💰 Consulte ementa em titisushi.com":"💰 Voir le menu sur titisushi.com",
+      "Quem somos":"Qui sommes-nous","O Grupo Sofia":"Le Groupe Sofia",
+      "Somos uma empresa 100% cabo-verdiana, com mais de 30 anos de presença no mercado da hospitalidade e turismo em Santiago. O nosso grupo é liderado por uma mulher cabo-verdiana, com orgulho e paixão pelo que fazemos.":"Nous sommes une entreprise 100% cap-verdienne, avec plus de 30 ans de présence sur le marché de l'hôtellerie et du tourisme à Santiago. Notre groupe est dirigé par une femme cap-verdienne, avec fierté et passion pour ce que nous faisons.",
+      "Reunimos alojamento, restauração, transporte e turismo para oferecer uma experiência completa — do aeroporto ao hotel, do pequeno-almoço ao passeio pela ilha. Cada detalhe é pensado com carinho para que a sua estadia em Cabo Verde seja inesquecível.":"Nous réunissons hébergement, restauration, transport et tourisme pour offrir une expérience complète — de l'aéroport à l'hôtel, du petit-déjeuner à l'excursion sur l'île. Chaque détail est pensé avec soin pour que votre séjour au Cap-Vert soit inoubliable.",
+      "Conte connosco. Estamos aqui para ajudar muito!":"Comptez sur nous. Nous sommes là pour vous aider !",
+      "🇨🇻 100% Cabo-Verdiana":"🇨🇻 100% Cap-Verdienne","👩‍💼 Liderada por mulher":"👩‍💼 Dirigée par une femme",
+      "🏅 +30 anos de experiência":"🏅 +30 ans d'expérience","💛 Sempre disponíveis":"💛 Toujours disponibles",
+      "Alojamentos":"Hébergements","Anos":"Ans","Disponíveis":"Disponibles",
+      "Hotel · Plateau · Rua Pedonal":"Hôtel · Plateau · Rue Piétonne",
+      "No coração do Plateau — Avaliação 8.0 · Localização 9.5":"Au cœur du Plateau — Note 8.0 · Emplacement 9.5",
+      "Hotel Colonial · Plateau · Praia":"Hôtel Colonial · Plateau · Praia",
+      "No coração do Plateau, na mais movimentada rua pedonal de Praia, a Pousada Praia Maria combina o charme histórico de um prédio colonial com atendimento próximo e personalizado. A localização é a melhor da cidade — avaliada com 9.5 pelos hóspedes. Pequeno-almoço opcional no Kaza Katxupa mesmo em frente, e serviço de transfer disponível. Fuja das taxas das plataformas e reserve diretamente connosco!":"Au cœur du Plateau, dans la rue piétonne la plus animée de Praia, la Pousada Praia Maria allie le charme historique d'un bâtiment colonial à un service proche et personnalisé. L'emplacement est le meilleur de la ville — noté 9.5 par les clients. Petit-déjeuner en option au Kaza Katxupa juste en face, et service de transfert disponible. Évitez les frais des plateformes et réservez directement avec nous !",
+      "Prédio Colonial":"Bâtiment Colonial","Charme histórico no Plateau":"Charme historique au Plateau",
+      "Rua Pedonal":"Rue Piétonne","Melhor localização da Praia":"Meilleur emplacement de Praia",
+      "15 Quartos":"15 Chambres","Receção 24h":"Réception 24h","Sempre disponíveis":"Toujours disponibles",
+      "Pequeno-almoço":"Petit-déjeuner","700 CVE no Kaza Katxupa":"7 € au Kaza Katxupa",
+      "WiFi Grátis":"WiFi Gratuit","Em todo o hotel":"Dans tout l'hôtel",
+      "Duplo":"Double","Cama extra":"Lit supplémentaire",
+      "5.000 CVE + taxa turística":"50 € + taxe touristique","6.000 CVE + taxa turística":"60 € + taxe touristique",
+      "7.000 CVE + taxa turística":"70 € + taxe touristique","2.000 CVE + taxa turística":"20 € + taxe touristique",
+      "15.000 CVE + taxa turística":"150 € + taxe touristique",
+      "Pequeno-almoço (Kaza Katxupa)":"Petit-déjeuner (Kaza Katxupa)","700 CVE / pessoa":"7 € / personne",
+      "Transfer aeroporto (manhã)":"Transfert aéroport (matin)","1.500 CVE":"15 €",
+      "Transfer aeroporto (noite)":"Transfert aéroport (nuit)","2.000 CVE":"20 €",
+      "Reservar Quarto":"Réserver une Chambre",
+      "Reserve diretamente e evite comissões. Confirmação imediata pelo WhatsApp.":"Réservez directement et évitez les commissions. Confirmation immédiate par WhatsApp.",
+      "Ambiente animado, perto do mar — 524 avaliações":"Ambiance animée, près de la mer — 524 avis",
+      "O Txada Hostel está situado em Achada de Santo António, a 3 km do Plateau, coração da cidade, e a menos de 1 km das praias de Quebra Canela e Prainha. Com um ambiente jovem e acolhedor, oferece alojamento com ar condicionado, sala comum e fácil acesso à Praia de Quebra Canela. Ideal para viajantes que procuram boa relação qualidade-preço.":"Le Txada Hostel est situé à Achada de Santo António, à 3 km du Plateau, cœur de la ville, et à moins d'1 km des plages de Quebra Canela et Prainha. Avec une ambiance jeune et accueillante, il offre un hébergement climatisé, une salle commune et un accès facile à la plage de Quebra Canela. Idéal pour les voyageurs recherchant un bon rapport qualité-prix.",
+      "Ar Condicionado":"Climatisation","Em todos os quartos":"Dans toutes les chambres",
+      "Sala Comum":"Salle Commune","Espaço partilhado confortável":"Espace partagé confortable",
+      "Perto do Mar":"Près de la Mer","1 km da praia":"1 km de la plage",
+      "Maior bairro da capital, tudo o que precisa por perto · 3 km do centro":"Plus grand quartier de la capitale, tout ce dont vous avez besoin à proximité · 3 km du centre",
+      "Bom Preço":"Bon Prix","Ótima relação qualidade-preço":"Excellent rapport qualité-prix",
+      "Social":"Social","Ambiente jovem e animado":"Ambiance jeune et animée",
+      "Cama em dormitório":"Lit en dortoir","Quarto privado":"Chambre privée",
+      "Reservar no Txada Hostel":"Réserver au Txada Hostel",
+      "Contacte-nos pelo WhatsApp ou email para verificar disponibilidade.":"Contactez-nous par WhatsApp ou e-mail pour vérifier les disponibilités.",
+      "Sea & Art — À beira-mar em Praia":"Sea & Art — Au bord de la mer à Praia",
+      "A Casa Estrela é uma guesthouse única e artística mesmo à beira-mar em Praia. Beachfront, a apenas passos da Praia da Prainha, combina arte, conforto e tranquilidade numa localização verdadeiramente privilegiada. Um ambiente com muita arte e decoração linda e particular, de descoberta e bem-estar, ideal para viajantes que procuram algo especial.":"Casa Estrela est une maison d'hôtes unique et artistique au bord de la mer à Praia. En front de mer, à quelques pas de la plage de Prainha, elle allie art, confort et tranquillité dans un emplacement vraiment privilégié. Un cadre plein d'art et d'une belle décoration particulière, de découverte et de bien-être, idéal pour les voyageurs à la recherche de quelque chose de spécial.",
+      "À beira da Praia da Prainha":"Au bord de la plage de Prainha","Ambiente artístico único":"Ambiance artistique unique",
+      "Internet em toda a casa":"Internet dans toute la maison","Praia Centro":"Centre-ville",
+      "1,1 km do centro da cidade":"1,1 km du centre-ville",
+      "Vista Mar":"Vue Mer","Acordar com o mar à porta":"Se réveiller avec la mer à sa porte",
+      "Tranquilidade":"Tranquillité","Muitos ambientes para relaxar":"De nombreux espaces pour se détendre",
+      "Quarto duplo / noite":"Chambre double / nuit","Reservar Casa Estrela":"Réserver Casa Estrela",
+      "Contacte-nos para verificar disponibilidade e obter o melhor preço.":"Contactez-nous pour vérifier les disponibilités et obtenir le meilleur prix.",
+      "Apartamentos · Prainha · Zona Diplomática":"Appartements · Prainha · Zone Diplomatique",
+      "Apartamentos elegantes a 3 min da praia — Localização 8.7":"Appartements élégants à 3 min de la plage — Emplacement 8.7",
+      "Apartamentos · Prainha · Praia":"Appartements · Prainha · Praia",
+      "Apartamentos modernos e elegantes na melhor zona de Praia — a Prainha. Situados na área diplomática, rodeados de embaixadas e residências oficiais, oferecem máxima segurança e tranquilidade. A 3 minutos a pé da Prainha.":"Appartements modernes et élégants dans le meilleur quartier de Praia — Prainha. Situés dans la zone diplomatique, entourés d'ambassades et de résidences officielles, ils offrent une sécurité et une tranquillité maximales. À 3 minutes à pied de Prainha.",
+      "3 min da Praia":"3 min de la Plage","Prainha a pé":"Prainha à pied",
+      "Estacionamento":"Parking","Gratuito no local":"Gratuit sur place",
+      "Cozinha Equipada":"Cuisine Équipée","Em todos os apartamentos":"Dans tous les appartements",
+      "Segurança 24h":"Sécurité 24h","Zona diplomática":"Zone diplomatique",
+      "Internet rápida":"Internet rapide","Trabalho":"Travail","Ideal para quem procura trabalhar":"Idéal pour ceux qui veulent travailler",
+      "Check-in / Check-out":"Check-in / Check-out","14h · 11-12h":"14h · 11h-12h",
+      "Reservar na Vila Prainha":"Réserver à Vila Prainha",
+      "Contacte-nos para verificar disponibilidade e proposta personalizada.":"Contactez-nous pour vérifier les disponibilités et une offre personnalisée.",
+      "Apartamento · Prainha · Airbnb":"Appartement · Prainha · Airbnb",
+      "Tranquilidade na Prainha — Grupo Sofia":"Tranquillité à Prainha — Grupo Sofia",
+      "Apartamento Completo · Prainha":"Appartement Complet · Prainha",
+      "A Casa Glória é o refúgio perfeito na Prainha da Cidade da Praia. A poucos passos do mar e da tranquila Praia da Prainha, é o ponto de partida ideal para descobrir a capital de Cabo Verde com charme e tranquilidade. Quarto amplo com cama king, sala espaçosa, cozinha equipada, ar condicionado, internet rápida e estacionamento gratuito. Um apartamento acolhedor com toda a autenticidade cabo-verdiana.":"Casa Glória est le refuge parfait à Prainha, Cidade da Praia. À quelques pas de la mer et de la paisible plage de Prainha, c'est le point de départ idéal pour découvrir la capitale du Cap-Vert avec charme et tranquillité. Chambre spacieuse avec lit king, salon spacieux, cuisine équipée, climatisation, internet rapide et parking gratuit. Un appartement chaleureux avec toute l'authenticité cap-verdienne.",
+      "Acesso à Praia":"Accès à la Plage","A passos da Prainha":"À quelques pas de Prainha",
+      "Cama King":"Lit King","Quarto + sofá na sala":"Chambre + canapé au salon",
+      "Autonomia total":"Autonomie totale","Conforto térmico":"Confort thermique",
+      "Internet Rápida":"Internet Rapide","WiFi incluído":"WiFi inclus",
+      "Self check-in":"Enregistrement autonome","Funcionários do edifício":"Personnel de l'immeuble","15h · 12h":"15h · 12h",
+      "Reservar Casa Glória":"Réserver Casa Glória",
+      "Contacte-nos pelo WhatsApp ou reserve diretamente no Airbnb.":"Contactez-nous par WhatsApp ou réservez directement sur Airbnb.",
+      "Transfer · Aeroporto → Hotel":"Transfert · Aéroport → Hôtel",
+      "Do aeroporto ao seu alojamento, sem complicações":"De l'aéroport à votre hébergement, sans souci",
+      "Transporte Privado · Santiago":"Transport Privé · Santiago","Serviço de Transfer":"Service de Transfert",
+      "Chegue descansado ao seu alojamento. Transfer privado direto do Aeroporto Internacional Amílcar Cabral para a sua porta, com pontualidade e conforto. Disponível em ida, volta ou ida+volta. Reserva rápida pelo WhatsApp.":"Arrivez détendu à votre hébergement. Transfert privé directement de l'aéroport international Amílcar Cabral à votre porte, ponctuel et confortable. Disponible en aller, retour ou aller-retour. Réservation rapide par WhatsApp.",
+      "Ida":"Aller","Aeroporto → Alojamento":"Aéroport → Hébergement",
+      "Volta":"Retour","Alojamento → Aeroporto":"Hébergement → Aéroport",
+      "Ida + Volta":"Aller-Retour","Os dois trajetos juntos":"Les deux trajets ensemble",
+      "Pontual":"Ponctuel","Sempre a tempo do voo":"Toujours à l'heure pour le vol",
+      "Confortável":"Confortable","Viatura espaçosa e AC":"Véhicule spacieux avec clim",
+      "Reserva Rápida":"Réservation Rapide","Confirme pelo WhatsApp":"Confirmez par WhatsApp",
+      "Ida (aeroporto → alojamento) — manhã":"Aller (aéroport → hébergement) — matin",
+      "Ida (aeroporto → alojamento) — noite":"Aller (aéroport → hébergement) — nuit",
+      "Volta (alojamento → aeroporto)":"Retour (hébergement → aéroport)",
+      "Pedir Transfer":"Demander un Transfert",
+      "Diga-nos a data, hora do voo e o alojamento — tratamos de tudo.":"Indiquez-nous la date, l'heure du vol et l'hébergement — nous nous occupons de tout.",
+      "Com ou sem motorista — explore Santiago ao seu ritmo":"Avec ou sans chauffeur — explorez Santiago à votre rythme",
+      "Explore a ilha de Santiago ao seu ritmo com o nosso serviço de aluguer premium. VW ID.3 elétrico (eco-friendly) e Hyundai Tucson SUV, com opção self-drive ou com motorista dedicado. Perfeito para excursões, reuniões ou simplesmente explorar toda a ilha.":"Explorez l'île de Santiago à votre rythme avec notre service de location premium. VW ID.3 électrique (écologique) et SUV Hyundai Tucson, avec option en autonomie ou chauffeur dédié. Parfait pour les excursions, les réunions ou simplement explorer toute l'île.",
+      "100% elétrico":"100% électrique","SUV todo-o-terreno":"SUV tout-terrain",
+      "Self-Drive":"En Autonomie","Conduza você mesmo":"Conduisez vous-même",
+      "Com Motorista":"Avec Chauffeur","Condutor profissional":"Chauffeur professionnel",
+      "Após 18h":"Après 18h","Condições especiais":"Conditions spéciales",
+      "Toda a Ilha":"Toute l'Île","Explore Santiago livre":"Explorez Santiago librement",
+      "VW ID.3 (self-drive)":"VW ID.3 (en autonomie)","7.000 CVE / dia":"70 € / jour",
+      "Hyundai Tucson (sem condutor)":"Hyundai Tucson (sans chauffeur)","8.000 CVE / dia":"80 € / jour",
+      "Hyundai Tucson (com condutor, até 18h)":"Hyundai Tucson (avec chauffeur, jusqu'à 18h)","15.000 CVE / dia":"150 € / jour",
+      "Hyundai Tucson (com condutor, após 18h)":"Hyundai Tucson (avec chauffeur, après 18h)","Consultar preços":"Demander les prix",
+      "Reservar Viatura":"Réserver un Véhicule",
+      "Diga-nos as datas e o modelo — confirmamos disponibilidade imediatamente.":"Indiquez-nous les dates et le modèle — nous confirmons la disponibilité immédiatement.",
+      "Turismo · Ilha de Santiago":"Tourisme · Île de Santiago",
+      "Descubra toda a ilha de Santiago connosco":"Découvrez toute l'île de Santiago avec nous",
+      "Tours Locais · Santiago":"Excursions Locales · Santiago",
+      "Conheça Santiago a fundo com guias locais apaixonados pela ilha. Da Cidade Velha — Património Mundial da UNESCO — às praias paradisíacas de Tarrafal, passando pelas serras verdes e mercados coloridos. Roteiros à medida para individuais, casais, famílias e grupos.":"Découvrez Santiago en profondeur avec des guides locaux passionnés par l'île. De Cidade Velha — site du patrimoine mondial de l'UNESCO — aux plages paradisiaques de Tarrafal, en passant par les montagnes verdoyantes et les marchés colorés. Itinéraires sur mesure pour individuels, couples, familles et groupes.",
+      "Património Mundial UNESCO":"Patrimoine Mondial UNESCO","Parque Natural único":"Parc Naturel unique",
+      "Praia paradisíaca do norte":"Plage paradisiaque du nord","A maior praia de Santiago":"La plus grande plage de Santiago",
+      "Cultura Local":"Culture Locale","Mercados e artesanato":"Marchés et artisanat",
+      "Personalizado":"Personnalisé","Roteiros à medida":"Itinéraires sur mesure",
+      "Meio dia":"Demi-journée","Dia completo":"Journée complète","Grupos":"Groupes",
+      "Preço especial — consulte":"Prix spécial — consultez-nous","Roteiro personalizado":"Itinéraire personnalisé",
+      "Orçamento sob consulta":"Devis sur demande","Reservar Passeio":"Réserver une Excursion",
+      "Diga-nos o que quer ver e quando — criamos o roteiro perfeito.":"Dites-nous ce que vous voulez voir et quand — nous créons l'itinéraire parfait.",
+      "Serviço · Plateau · Praia":"Service · Plateau · Praia",
+      "Explore livre — as malas ficam connosco":"Explorez librement — laissez vos bagages avec nous",
+      "Serviço Prático · Plateau":"Service Pratique · Plateau","Serviço de Guarda-Malas":"Service de Consigne à Bagages",
+      "Ao lado do Café Sofia, no Plateau. Guarde as suas malas e explore a cidade em plena liberdade — sem peso. Ideal para quem fez check-out e ainda tem horas antes do voo. Espaço seguro, preço fixo por dia completo, aceita malas de todos os tamanhos.":"À côté du Café Sofia, au Plateau. Déposez vos bagages et explorez la ville en toute liberté — sans poids. Idéal pour ceux qui ont fait le check-out et ont encore des heures avant leur vol. Espace sécurisé, prix fixe par journée complète, accepte les bagages de toutes tailles.",
+      "Ao lado do Café Sofia":"À côté du Café Sofia","Seguro":"Sécurisé","Espaço vigiado":"Espace surveillé",
+      "Todos os Tamanhos":"Toutes Tailles","Malas grandes e pequenas":"Grands et petits bagages",
+      "Ideal Pré-Voo":"Idéal Avant le Vol","Entre check-out e o voo":"Entre le check-out et le vol",
+      "Full Day":"Journée Complète","Preço fixo por dia":"Prix fixe par jour",
+      "Explore Livre":"Explorez Librement","Sem peso a carregar":"Sans poids à porter",
+      "Por mala / dia completo (full day)":"Par bagage / journée complète","500 CVE":"5 €",
+      "Guardar as Malas":"Déposer vos Bagages","Passe pelo Café Sofia ou contacte-nos com antecedência.":"Passez au Café Sofia ou contactez-nous à l'avance."
+    }
+  };
+  let i18nNodes = [];
+  function collectI18n() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    let n;
+    while ((n = walker.nextNode())) {
+      const p = n.parentNode;
+      if (!p || p.tagName === 'SCRIPT' || p.tagName === 'STYLE') continue;
+      if (n.nodeValue && n.nodeValue.trim()) i18nNodes.push({node:n, pt:n.nodeValue});
+    }
+  }
+  function setLang(lang, btn) {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    const active = btn || document.querySelector('.lang-btn[data-lang="'+lang+'"]');
+    if (active) active.classList.add('active');
+    const dict = I18N[lang];
+    i18nNodes.forEach(({node, pt}) => {
+      if (lang === 'pt' || !dict) { node.nodeValue = pt; return; }
+      const key = pt.trim();
+      node.nodeValue = (dict[key] !== undefined) ? pt.replace(key, dict[key]) : pt;
+    });
+    document.documentElement.lang = lang;
+  }
+
   function scrollAbout() {
     goTo('home');
     setTimeout(() => {
@@ -1029,6 +1393,8 @@
     }, 100);
   }
 
+  collectI18n();
+  setLang('en');
   goTo('home');
 </script>
 </body>
